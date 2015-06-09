@@ -29,8 +29,8 @@ SplashState.prototype.draw = function(dt)
 	context.fillStyle = "#aaa";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
-	context.font = "64pt Veranda";
+	context.font = "50pt Veranda";
 	context.fillStyle = "#FF0";
-	var width = context.measureText( "SPLISH SPLASH").width;
-	context.fillText("SPLISH SPLASH", SCREEN_WIDTH/2 - width/2, SCREEN_HEIGHT/2);
+	var width = context.measureText( "Particles and Scene").width;
+	context.fillText("Particles and scene", SCREEN_WIDTH/2 - width/2, SCREEN_HEIGHT/2);
 }

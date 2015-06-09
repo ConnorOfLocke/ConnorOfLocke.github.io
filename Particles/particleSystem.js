@@ -37,6 +37,7 @@ var Emitter = function(imageFilename, PositionX, PositionY, numParticles)
 	this.p_velocity_y = [];
 	
 	this.p_rotation = [];
+	this.p_rotation_speed = [];
 	this.p_life = [];
 	this.p_maxLife = [];
 	
@@ -58,6 +59,8 @@ var Emitter = function(imageFilename, PositionX, PositionY, numParticles)
 		this.p_velocity_y[i] = 0;
 		
 		this.p_rotation[i] = 0;
+		this.p_rotation_speed[i] = 0;
+		
 		this.p_life[i] = 0;
 		this.p_maxLife[i] = 0;
 		
@@ -73,6 +76,11 @@ var Emitter = function(imageFilename, PositionX, PositionY, numParticles)
 	
 	this.minLife = 0.5;
 	this.maxLife = 3.0;
+	
+	this.minRotaion = 0.0;
+	this.maxRotation = 3.141;
+	this.minRotation_speed = -3.141;
+	this.maxRotation_speed = 3.141;
 	
 	this.minSize = 8;
 	this.maxSize = 32;
@@ -137,8 +145,10 @@ Emitter.prototype.emit = function(dt)
 	var newVelocity = random( this.minVelocity, this.maxVelocity);
 	this.p_velocity_x[this.currentMaxParticle] *= newVelocity;
 	this.p_velocity_y[this.currentMaxParticle] *= newVelocity;
-		
-	//this.p_rotation[this.currentMaxParticle] = 0;
+				
+	this.p_rotation[this.currentMaxParticle] = random( this.minRotaion, this.maxRotaion);
+	this.p_rotation_speed[this.currentMaxParticle] = random( this.minRotation_speed, this.maxRotation_speed);
+	
 	this.p_life[this.currentMaxParticle] = random( this.minLife, this.maxLife);
 	this.p_maxLife[this.currentMaxParticle] = this.p_life[this.currentMaxParticle];
 	this.p_alpha[this.currentMaxParticle] = this.alpha;
@@ -168,6 +178,8 @@ Emitter.prototype.update = function(dt)
 			
 			this.p_position_x[i] += this.p_velocity_x[i] * dt;
 			this.p_position_y[i] += this.p_velocity_y[i] * dt;
+			
+			this.p_rotation[i] += this.p_rotation_speed[i] * dt;
 			
 			this.p_alpha[i] = this.p_life[i] / this.p_maxLife[i];
 		}
