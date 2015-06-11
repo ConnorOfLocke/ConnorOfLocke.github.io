@@ -58,7 +58,6 @@ GameState.prototype.update = function(dt)
 	this.SmokeParticles.update(dt);
 	this.FireParticles.update(dt);	
 	this.charcoalParticles.update(dt);
-	
 }
 
 GameState.prototype.draw = function(dt)
@@ -70,8 +69,8 @@ GameState.prototype.draw = function(dt)
 	this.SmokeParticles.draw();
 	this.FireParticles.draw();
 
-	context.font = "32pt Veranda";
-	context.fillStyle = "#FF0";
-	var width = context.measureText( "Super Cool Flame").width;
-	context.fillText("Super Cool Flame", SCREEN_WIDTH/2 - width/2, 50);
+	//context.font = "32pt Veranda";
+	//context.fillStyle = "#FF0";
+	//var width = context.measureText( "Super Cool Flame").width;
+	//context.fillText("Super Cool Flame", SCREEN_WIDTH/2 - width/2, 50);
 }
