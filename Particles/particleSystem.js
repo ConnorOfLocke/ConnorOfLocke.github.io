@@ -107,16 +107,17 @@ Emitter.prototype.emit = function(dt)
 	if (this.currentMaxParticle > this.maxNumParticles - 1)
 		this.currentMaxParticle = 0;
 		
-	var p_index = (this.currentMaxParticle / 4 - this.currentMaxParticle % 4);
+	var p_index = ((this.currentMaxParticle - this.currentMaxParticle % 4 )/ 4);
 	
-	if (currentMaxParticle % 4 === 0 )
+	if (this.currentMaxParticle % 4 === 0 )
 	{
-		this.p_position_x[p_index].x = this.position.x;
-		this.p_position_y[p_index].x = this.position.y;
+		this.p_position_x[p_index].x_ = this.position.x;
+		this.p_position_y[p_index].x_ = this.position.y;
 		
-		this.p_size_x[p_index].x =  random(this.minSize, this.maxSize);
-		this.p_size_y[p_index].x =  random(this.minSize, this.maxSize);
+		this.p_size_x[p_index].x_ =  random(this.minSize, this.maxSize);
+		this.p_size_y[p_index].x_ =  random(this.minSize, this.maxSize);
 		
+        //sets new velocity
 		var newVelocity_x;
 		var newVelocity_y;
 		
@@ -140,91 +141,150 @@ Emitter.prototype.emit = function(dt)
 		newVelocity_x *= Speed;
 		newVelocity_y *= Speed;
 		
-		
-		
-		//CONTINUE HERE
-		////////this.p_rotation[this.currentMaxParticle] = random( this.minRotaion, this.maxRotaion);
-		////////this.p_rotation_speed[this.currentMaxParticle] = random( this.minRotation_speed, this.maxRotation_speed);
-		////////
-		////////this.p_life[this.currentMaxParticle] = random( this.minLife, this.maxLife);
-		////////this.p_maxLife[this.currentMaxParticle] = this.p_life[this.currentMaxParticle];
-		////////this.p_alpha[this.currentMaxParticle] = this.alpha;
-		
+        this.p_velocity_x[p_index].x_ = newVelocity_x;
+		this.p_velocity_y[p_index].x_ = newVelocity_y;
+        
+        
+        this.p_rotation[p_index].x_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].x_ = random( this.minRotation_speed, this.maxRotation_speed);
+        
+        this.p_life[p_index].x_ = random( this.minLife, this.maxLife);
+		this.p_maxLife[p_index].x_ = this.p_life[p_index].x_;
+		this.p_alpha[p_index].x_ = this.alpha;
+	
 	}
-	if (currentMaxParticle % 4 === 1 )
+	else if (this.currentMaxParticle % 4 === 1 )
 	{
+		this.p_position_x[p_index].y_ = this.position.x;
+		this.p_position_y[p_index].y_ = this.position.y;
 		
+		this.p_size_x[p_index].y_ =  random(this.minSize, this.maxSize);
+		this.p_size_y[p_index].y_ =  random(this.minSize, this.maxSize);
+		
+        //sets new velocity
+		var newVelocity_x;
+		var newVelocity_y;
+		
+		if (this.spawnDirection_x !== 0)
+			newVelocity_x = this.spawnDirection_x;
+		else
+			newVelocity_x = random(-0.5, 0.5);
+		
+		if (this.spawnDirection_y !== 0)
+			newVelocity_y = this.spawnDirection_y;
+		else
+			newVelocity_y = random(-0.5, 0.5);
+		
+		var magnitude = Math.sqrt(newVelocity_x * newVelocity_x  +  newVelocity_y  * newVelocity_y );
+		if (magnitude != 0)
+		{
+			newVelocity_x /= magnitude;
+			newVelocity_y /= magnitude;
+		}
+		var Speed = random( this.minVelocity, this.maxVelocity);
+		newVelocity_x *= Speed;
+		newVelocity_y *= Speed;
+		
+        this.p_velocity_x[p_index].y_ = newVelocity_x;
+		this.p_velocity_y[p_index].y_ = newVelocity_y;
+        
+        
+        this.p_rotation[p_index].y_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].y_ = random( this.minRotation_speed, this.maxRotation_speed);
+        
+        this.p_life[p_index].y_ = random( this.minLife, this.maxLife);
+		this.p_maxLife[p_index].y_ = this.p_life[p_index].y_;
+		this.p_alpha[p_index].y_ = this.alpha;
 	}
 
-	if (currentMaxParticle % 4 === 2 )
+	else if (this.currentMaxParticle % 4 === 2 )
 	{
+		this.p_position_x[p_index].z_ = this.position.x;
+		this.p_position_y[p_index].z_ = this.position.y;
 		
-	}
-
-	if (currentMaxParticle % 4 === 3 )		
-	{
+		this.p_size_x[p_index].z_ =  random(this.minSize, this.maxSize);
+		this.p_size_y[p_index].z_ =  random(this.minSize, this.maxSize);
 		
+        //sets new velocity
+		var newVelocity_x;
+		var newVelocity_y;
+		
+		if (this.spawnDirection_x !== 0)
+			newVelocity_x = this.spawnDirection_x;
+		else
+			newVelocity_x = random(-0.5, 0.5);
+		
+		if (this.spawnDirection_y !== 0)
+			newVelocity_y = this.spawnDirection_y;
+		else
+			newVelocity_y = random(-0.5, 0.5);
+		
+		var magnitude = Math.sqrt(newVelocity_x * newVelocity_x  +  newVelocity_y  * newVelocity_y );
+		if (magnitude != 0)
+		{
+			newVelocity_x /= magnitude;
+			newVelocity_y /= magnitude;
+		}
+		var Speed = random( this.minVelocity, this.maxVelocity);
+		newVelocity_x *= Speed;
+		newVelocity_y *= Speed;
+		
+        this.p_velocity_x[p_index].z_ = newVelocity_x;
+		this.p_velocity_y[p_index].z_ = newVelocity_y;
+        
+        
+        this.p_rotation[p_index].z_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].z_ = random( this.minRotation_speed, this.maxRotation_speed);
+        
+        this.p_life[p_index].z_ = random( this.minLife, this.maxLife);
+		this.p_maxLife[p_index].z_ = this.p_life[p_index].z_;
+		this.p_alpha[p_index].z_ = this.alpha;
 	}
 
-	//this.p_position_x[i] = new SIMD.Float32x4();
-	//this.p_position_y[i] = new SIMD.Float32x4();
-	//this.p_size_x[i] = new SIMD.Float32x4();
-	//this.p_size_y[i] = new SIMD.Float32x4();
-	//
-	//this.p_velocity_x[i] = new SIMD.Float32x4();
-	//this.p_velocity_y[i] = new SIMD.Float32x4();
-	//
-	//this.p_rotation[i] = new SIMD.Float32x4();
-	//this.p_rotation_speed[i] = new SIMD.Float32x4();
-	//
-	//this.p_life[i] = new SIMD.Float32x4();
-	//this.p_maxLife[i] = new SIMD.Float32x4();
-	//
-	//this.p_alpha[i] = new SIMD.Float32x4(1,1,1,1);
-	
-	
-	
-	//set position and size
-	this.p_position_x[this.currentMaxParticle] = this.position.x;
-	this.p_position_y[this.currentMaxParticle] = this.position.y;
-	
-	this.p_size_x[this.currentMaxParticle] =  random(this.minSize, this.maxSize);
-	this.p_size_y[this.currentMaxParticle] =  random(this.minSize, this.maxSize);
-
-	
-	if (this.spawnDirection_y !== 0)
+	else if (this.currentMaxParticle % 4 === 3 )		
 	{
-		this.p_velocity_x[this.currentMaxParticle] = random(-0.5, 0.5);
-		this.p_velocity_y[this.currentMaxParticle] = this.spawnDirection_y;
+		this.p_position_x[p_index].w_ = this.position.x;
+		this.p_position_y[p_index].w_ = this.position.y;
+		
+		this.p_size_x[p_index].w_ = random(this.minSize, this.maxSize);
+		this.p_size_y[p_index].w_ = random(this.minSize, this.maxSize);
+		
+        //sets new velocity
+		var newVelocity_x;
+		var newVelocity_y;
+		
+		if (this.spawnDirection_x !== 0)
+			newVelocity_x = this.spawnDirection_x;
+		else
+			newVelocity_x = random(-0.5, 0.5);
+		
+		if (this.spawnDirection_y !== 0)
+			newVelocity_y = this.spawnDirection_y;
+		else
+			newVelocity_y = random(-0.5, 0.5);
+		
+		var magnitude = Math.sqrt(newVelocity_x * newVelocity_x  +  newVelocity_y  * newVelocity_y );
+		if (magnitude != 0)
+		{
+			newVelocity_x /= magnitude;
+			newVelocity_y /= magnitude;
+		}
+		var Speed = random( this.minVelocity, this.maxVelocity);
+		newVelocity_x *= Speed;
+		newVelocity_y *= Speed;
+		
+        this.p_velocity_x[p_index].w_ = newVelocity_x;
+		this.p_velocity_y[p_index].w_ = newVelocity_y;
+        
+        
+        this.p_rotation[p_index].w_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].w_ = random( this.minRotation_speed, this.maxRotation_speed);
+        
+        this.p_life[p_index].w_ = random( this.minLife, this.maxLife);
+		this.p_maxLife[p_index].w_ = this.p_life[p_index].w_;
+		this.p_alpha[p_index].w_ = this.alpha;
 	}
-	if (this.spawnDirection_x !== 0)
-	{
-		this.p_velocity_x[this.currentMaxParticle] = this.spawnDirection_x;
-		this.p_velocity_y[this.currentMaxParticle] += random(-0.5, 0.5);
-	}
-	if (this.spawnDirection_x === 0 && this.spawnDirection_y === 0)
-	{
-		//set random direction, normalize it, multiply by new velocity
-		this.p_velocity_x[this.currentMaxParticle] = random(-1, 1);
-		this.p_velocity_y[this.currentMaxParticle] = random(-1, 1);
-	}
-
-	var magnitude = Math.sqrt(this.p_velocity_x[this.currentMaxParticle] * this.p_velocity_x[this.currentMaxParticle]  +   this.p_velocity_y[this.currentMaxParticle] * this.p_velocity_y[this.currentMaxParticle]);
-	if (magnitude != 0)
-	{
-		this.p_velocity_x[this.currentMaxParticle] /= magnitude;
-		this.p_velocity_y[this.currentMaxParticle] /= magnitude;
-	}
-	var newVelocity = random( this.minVelocity, this.maxVelocity);
-	this.p_velocity_x[this.currentMaxParticle] *= newVelocity;
-	this.p_velocity_y[this.currentMaxParticle] *= newVelocity;
-				
-	this.p_rotation[this.currentMaxParticle] = random( this.minRotaion, this.maxRotaion);
-	this.p_rotation_speed[this.currentMaxParticle] = random( this.minRotation_speed, this.maxRotation_speed);
-	
-	this.p_life[this.currentMaxParticle] = random( this.minLife, this.maxLife);
-	this.p_maxLife[this.currentMaxParticle] = this.p_life[this.currentMaxParticle];
-	this.p_alpha[this.currentMaxParticle] = this.alpha;
+    
 }
 
 Emitter.prototype.update = function(dt)
@@ -245,38 +305,24 @@ Emitter.prototype.update = function(dt)
 	
 	var deltaTime = new SIMD.Float32x4(dt, dt, dt, dt);
 
-	for (var i = 0 ; i < this.p_life.length / 4; i++)
+	for (var i = 0 ; i < this.p_life.length; i++)
 	{
-		if (this.p_life[i] > 0)
-		{
-			//create all the floats
-			var p_position_x = new SIMD.Float32x4(this.p_position_x[i], this.position_x[i + 1], this.position_x[i + 2], this.position_x[i + 3]);
-			var p_position_y = new SIMD.Float32x4(this.p_position_y[i], this.position_y[i + 1], this.position_y[i + 2], this.position_y[i + 3]);
-			
-			var p_velocity_x = new SIMD.Float32x4(this.p_velocity_x[i], this.p_velocity_x[i + 1], this.p_velocity_x[i + 2], this.p_velocity_x[i + 3]);
-			var p_velocity_y = new SIMD.Float32x4(this.p_velocity_y[i], this.p_velocity_y[i + 1], this.p_velocity_y[i + 2], this.p_velocity_y[i + 3]);
-			
-			var p_rotation = new SIMD.Float32x4(this.p_rotation[i], this.p_rotation[i + 1], this.p_rotation[i + 2], this.p_rotation[i + 3]);
-			var p_rotation_speed = new SIMD.Float32x4(this.p_rotation_speed[i], this.p_rotation_speed[i + 1], this.p_rotation_speed[i + 2], this.p_rotation_speed[i + 3]);
-			
-			var p_life = new SIMD.Float32x4( this.p_life[i], this.p_life[i + 1], this.p_life[i + 2], this.p_life[i + 3]);
-			var p_alpha = new SIMD.Float32x4( this.p_alpha[i], this.p_alpha[i + 1], this.p_alpha[i + 2], this.p_alpha[i + 3]);
-			
-			this.p_life[i] -= dt;
-			
-			this.p_velocity_x[i] += this.gravity_x;
-			this.p_velocity_y[i] += this.gravity_y;
-			
-			this.p_velocity_x[i] += this.wind_x;
-			this.p_velocity_y[i] += this.wind_y;
-			
-			this.p_position_x[i] += this.p_velocity_x[i] * dt;
-			this.p_position_y[i] += this.p_velocity_y[i] * dt;
-			
-			this.p_rotation[i] += this.p_rotation_speed[i] * dt;
-			
-			this.p_alpha[i] = this.p_life[i] / this.p_maxLife[i];
-		}
+        //SIMD.Int32x4 = SIMD.Int32x4.
+        
+        this.p_velocity_x[i] = new SIMD.Float32x4.add( this.p_velocity_x [i], gravity_x );
+        this.p_velocity_y[i] = new SIMD.Float32x4.add( this.p_velocity_y [i], gravity_y );
+        
+        this.p_velocity_x[i] = new SIMD.Float32x4.add( this.p_velocity_x [i], wind_x );
+        this.p_velocity_y[i] = new SIMD.Float32x4.add( this.p_velocity_y [i], wind_y );
+        
+        this.p_position_x[i] = new SIMD.Float32x4.add( this.p_position_x[i], this.p_velocity_x[i]);
+        this.p_position_y[i] = new SIMD.Float32x4.add( this.p_position_y[i], this.p_velocity_y[i]);
+        
+        var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
+        this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
+        
+        this.p_life[i] = new SIMD.Float32x4.sub( this.p_life[i], deltaTime);
+        this.p_alpha[i] = new SIMD.Float32x4.div(this.p_life[i] , this.p_maxLife[i]);
 	}
 }
 
@@ -284,19 +330,69 @@ Emitter.prototype.draw = function()
 {
 	for (var i = 0 ; i < this.p_life.length; i++)
 	{
-		if (this.p_life[i] > 0)
+        //draws all the things from each chunk
+      
+		if (this.p_life[i].x_ > 0)
 		{
 			var origin_x = this.p_image.width / 2;
 			var origin_y = this.p_image.height / 2;
 			
-			var scale_x = this.p_size_x[i] / this.p_image.width;
-			var scale_y = this.p_size_y[i] / this.p_image.height;
+			var scale_x = this.p_size_x[i].x_ / this.p_image.width;
+			var scale_y = this.p_size_y[i].x_ / this.p_image.height;
 			
 			context.save();
-				context.translate(this.p_position_x[i], this.p_position_y[i]);
-				context.rotate(this.p_rotation[i]);
-				context.globalAlpha = this.p_alpha[i];
-				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i], this.p_size_y[i]);
+				context.translate(this.p_position_x[i].x_, this.p_position_y[i].x_ );
+				context.rotate(this.p_rotation[i].x_ );
+				context.globalAlpha = this.p_alpha[i].x_;
+				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].x_, this.p_size_y[i].x_ );
+			context.restore();
+		}
+        
+        if (this.p_life[i].y_ > 0)
+		{
+			var origin_x = this.p_image.width / 2;
+			var origin_y = this.p_image.height / 2;
+			
+			var scale_x = this.p_size_x[i].y_ / this.p_image.width;
+			var scale_y = this.p_size_y[i].y_ / this.p_image.height;
+			
+			context.save();
+				context.translate(this.p_position_x[i].y_ , this.p_position_y[i].y_ );
+				context.rotate(this.p_rotation[i].y_ );
+				context.globalAlpha = this.p_alpha[i].y_ ;
+				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].y_ , this.p_size_y[i].y_ );
+			context.restore();
+		}
+        
+        if (this.p_life[i].z_ > 0)
+		{
+			var origin_x = this.p_image.width / 2;
+			var origin_y = this.p_image.height / 2;
+			
+			var scale_x = this.p_size_x[i].z_ / this.p_image.width;
+			var scale_y = this.p_size_y[i].z_ / this.p_image.height;
+			
+			context.save();
+				context.translate(this.p_position_x[i].z_, this.p_position_y[i].z_ );
+				context.rotate(this.p_rotation[i].z_ );
+				context.globalAlpha = this.p_alpha[i].z_ ;
+				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].z_ , this.p_size_y[i].z_ );
+			context.restore();
+		}
+        
+        if (this.p_life[i].w_ > 0)
+		{
+			var origin_x = this.p_image.width / 2;
+			var origin_y = this.p_image.height / 2;
+			
+			var scale_x = this.p_size_x[i].w_ / this.p_image.width;
+			var scale_y = this.p_size_y[i].w_ / this.p_image.height;
+			
+			context.save();
+				context.translate(this.p_position_x[i].w_, this.p_position_y[i].w_ );
+				context.rotate(this.p_rotation[i].w_ );
+				context.globalAlpha = this.p_alpha[i].w_ ;
+				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].w_ , this.p_size_y[i].w_ );
 			context.restore();
 		}
 	}	
