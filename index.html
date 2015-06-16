@@ -7,7 +7,64 @@
 		
 			h1 {
 				text-align: center;
-				color : red;
+				font-family: "Courier New", Courier, monospace;
+				margin-bottom: 12;
+				margin-top : 0;
+			}
+			
+			#Header{
+				background : #fafafa;
+				width : 100%;
+				//margin-left : auto;
+				//margin-right : auto;
+				//display: block;
+			}
+			
+			#Title
+			{
+				background : #fafafa;
+				margin-left : auto;
+				margin-right : auto;
+				display: block;
+			}
+			
+			#TitleText
+			{
+				background : #fafafa;
+				white-space : nowrap;
+				width : 480px;
+				margin-left : auto;
+				margin-right : auto;
+				display: block;
+			}
+			
+			#MiddleContainer{
+				width : 100%;
+			}
+			
+			#Middle{
+				background : #3f4045;
+				width : 75%;
+				margin-left : auto;
+				margin-right : auto;
+				display: block;
+			}
+			
+			#MiddleContent
+			{
+				background : #3f4045;
+				width : 480px;
+				margin-left : auto;
+				margin-right : auto;
+				display: block;
+			}
+			
+			#ImageContainer
+			{
+				width : 100%;
+				margin-left : auto;
+				margin-right : auto;
+				display: block;
 			}
 			
 			#moss {
@@ -16,27 +73,59 @@
 				display: block;
 			}
 			
-			body {
-				background: -webkit-linear-gradient(red, black); /* For Safari 5.1 to 6.0 */
-				background: -o-linear-gradient(red, black); /* For Opera 11.1 to 12.0 */
-				background: -moz-linear-gradient(red, black); /* For Firefox 3.6 to 15 */
-				background: linear-gradient(red, black); /* Standard syntax */
+			html {
+				height: 110%;
+				background: -webkit-linear-gradient( #646165,#646165,#FAFAFA); /* For Safari 5.1 to 6.0 */
+				background: -o-linear-gradient(		 #646165,#646165,#FAFAFA); 	/* For Opera 11.1 to 12.0 */
+				background: -moz-linear-gradient(	 #646165,#646165,#FAFAFA); 	/* For Firefox 3.6 to 15 */
+				background: linear-gradient(		 #646165,#646165,#FAFAFA); 	/* Standard syntax */
 			}
+		
+			a:link{
+				//color : #FF0000;
+				color : #ffffff;
+				text-decoration: none;
+			}
+			
+			a:visited{
+				color : #ffffff;
+				text-decoration: none;
+			}
+			
+			a:hover{
+				color : #5F5AA2;
+			}
+
 		
 		</style>
 	</head>
 	
 	<body>
-		
-			<img id = "moss" src="moss.jpg" alt="moss" width = "480" height = "720">
-		
-		<a href = "Particles/particles.html">
-			<div>
-				<h1>Particles</h1>
+		<div id = "Header">
+
+		</div>
+		<div id = "MiddleContainer">
+			<div id = "Middle">
+				<div id = "Title">
+					<div id = "TitleText">
+						<h1 color = "#fafafa">Connor Locke-Warburton</h1>
+						<h1 color = "#fafafa" style = " font-size : 10px;">------</h1>
+						<h1 color = "#fafafa">Games Programmer</h1>
+					</div>
+				</div>
+				<div id = "MiddleContent">
+					<!--<div id= "ImageContainer">
+						<img id = "moss" src="moss.jpg" alt="moss" width = "480" height = "720">
+					</div> -->
+					<h1> 
+						<a href = "Particles/particles.html">
+							Particles
+						</a>
+					</h1>
+					</br>
+					<a href = "Cateroids/Cateroids.html"> <h1>Cateroids</h1> </a>
+				</div>
 			</div>
-		</a>
-		</br>
-		<a href = "Cateroids/Cateroids.html"> <h1>Cateroids</h1> </a>
-	
+		</div>
 	</body>
 </html> 
