@@ -11,8 +11,8 @@
     129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
     251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
     49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
-    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,
-	151,160,137,91,90,15,131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,  
+    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,151,160,137,91,90,15,          
+    131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,                     
     190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
     88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
     77,146,158,231,83,111,229,122,60,211,133,230,220,105,92,41,55,46,245,40,244,
@@ -23,7 +23,7 @@
     129,22,39,253, 19,98,108,110,79,113,224,232,178,185, 112,104,218,246,97,228,
     251,34,242,193,238,210,144,12,191,179,162,241, 81,51,145,235,249,14,239,107,
     49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
-    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180
+    138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180,
 ];
  
  //apply the smoothing function 6t^5 - 15t^4 + 10t^3
@@ -81,14 +81,14 @@
 	 var w = fade(zf);
 	 
 	var aaa, aba, aab, abb, baa, bba, bab, bbb;
-    aaa = p[p[p[    xi ]+     yi ]+     zi];
-    aba = p[p[p[    xi ]+ 1 + yi ]+     zi];
-    aab = p[p[p[    xi ]+     yi ]+ 1 + zi];
-    abb = p[p[p[    xi ]+ 1 + yi ]+ 1 + zi];
-    baa = p[p[p[1 + xi ]+     yi ]+     zi];
-    bba = p[p[p[1 + xi ]+ 1 + yi ]+     zi];
-    bab = p[p[p[1 + xi ]+     yi ]+ 1 + zi];
-    bbb = p[p[p[1 + xi ]+ 1 + yi ]+ 1 + zi];
+    aaa = p[p[p[    xi ] +     yi ] +     zi];
+    aba = p[p[p[    xi ] + 1 + yi ] +     zi];
+    aab = p[p[p[    xi ] +     yi ] + 1 + zi];
+    abb = p[p[p[    xi ] + 1 + yi ] + 1 + zi];
+    baa = p[p[p[1 + xi ] +     yi ] +     zi];
+    bba = p[p[p[1 + xi ] + 1 + yi ] +     zi];
+    bab = p[p[p[1 + xi ] +     yi ] + 1 + zi];
+    bbb = p[p[p[1 + xi ] + 1 + yi ] + 1 + zi];
 	 
 	 
 	var x1, x2, y1, y2;
@@ -166,11 +166,21 @@
  }
  
  FlowField.prototype.getSampleAtPoint = function(x, y)
- {
-
- 
- 
- }
+{
+    var checkCoord_x = x % this.width;
+    var checkCoord_y = y % this.height;
+    
+    checkCoord_x = checkCoord_x / this.width;
+    checkCoord_y = checkCoord_y / this.height;
+    
+    checkCoord_x = Math.round(checkCoord_x * this.horiz_samples);
+    checkCoord_y = Math.round(checkCoord_y * this.vert_samples);
+    
+    var index = checkCoord_x * this.horiz_samples + checkCoord_y;
+   
+    return [this.vectors_x[index], this.vectors_y[index]];
+    
+}
  
  FlowField.prototype.draw = function()
  {
@@ -184,11 +194,11 @@
         
 		context.save();
 		context.beginPath();
-			//context.strokeStyle = "#FFFFFF";
-            context.strokeStyle = " rgb("   + Math.round(this.values[i] * 255)
-                                     + ", " + Math.round(this.values[i] * 255) 
-                                     + ", " + Math.round(this.values[i] * 255) + "  ) ";
-                                            
+			context.strokeStyle = "#FFFFFF";
+            //context.strokeStyle = " rgb("   + Math.round(this.values[i] * 255)
+            //                         + ", " + Math.round(this.values[i] * 255) 
+            //                         + ", " + Math.round(this.values[i] * 255) + "  ) ";
+            //                                
             //context.strokeStyle = " rgb("+ (Math.round(this.vectors_x[i] * 255)) + ","
             //                             + (Math.round(this.vectors_y[i] * 255)) + ", 0)";
 			//context.strokeStyle =  "   linear-gradient(#FF0000, #0000FF)    -moz-linear-gradient(#FF0000, #0000FF) ";

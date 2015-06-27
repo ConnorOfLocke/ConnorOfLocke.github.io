@@ -2,8 +2,15 @@ var GameState = function()
 {
 	this.prototype = BaseState;
 	
-	this.FlowFieldApple = new FlowField();
-	this.FlowFieldApple.Init(50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 12, 6, 0.4); 
+	this.FlowFieldExample = new FlowField();
+	this.FlowFieldExample.Init(20, 20, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 12, 3, 0.2); 
+    
+    this.FlowActors = [];
+    for (var i = 0; i < 20; i++)
+    {
+        this.FlowActors[i] = new Actor(i * 15, i * 15, 200);
+    }
+    
     
     this.Timer = 0.0;
 }
@@ -21,10 +28,27 @@ GameState.prototype.unload = function()
 GameState.prototype.update = function(dt)
 {
 
-    this.FlowFieldApple.Init(50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, this.Timer, this.Timer, 12, 6, 0.4); 
-    this.Timer += dt * 0.1;
+    if (input.isKeyDown(input.KEY_SPACE))
+    {
+        this.Timer += dt * 0.1;
+        this.FlowFieldExample.Init(20, 20, SCREEN_WIDTH, SCREEN_HEIGHT, this.Timer, this.Timer, 12, 3, 0.2); 
+    }
     
     
+    for (var i = 0; i < this.FlowActors.length; i++)
+    {
+        this.FlowActors[i].update(dt);
+        
+        //adds the vector at flowfield point
+        var actor_x = this.FlowActors[i].position_x;
+        var actor_y = this.FlowActors[i].position_y;
+        
+        var sample = this.FlowFieldExample.getSampleAtPoint(actor_x, actor_y);
+    
+        this.FlowActors[i].velocity_x += sample[0] * 2000;
+        this.FlowActors[i].velocity_y += sample[1] * 2000;
+    }
+
 }
 
 GameState.prototype.draw = function(dt)
@@ -32,8 +56,12 @@ GameState.prototype.draw = function(dt)
 	context.fillStyle = "#000";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
 	
-	this.FlowFieldApple.draw();
-	
+	this.FlowFieldExample.draw();
+	for (var i = 0; i < this.FlowActors.length; i++)
+    {
+        this.FlowActors[i].draw();
+    }
+    
 	context.font = "16pt Veranda";
 	context.fillStyle = "#FF0";
 	var width = context.measureText( "FLOWYNESS").width;
