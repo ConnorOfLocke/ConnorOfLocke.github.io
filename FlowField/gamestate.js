@@ -3,8 +3,9 @@ var GameState = function()
 	this.prototype = BaseState;
 	
 	this.FlowFieldApple = new FlowField();
-	this.FlowFieldApple.Init(10, 10, 0, 4, 0.5); 
-	
+	this.FlowFieldApple.Init(50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, 0, 0, 12, 6, 0.4); 
+    
+    this.Timer = 0.0;
 }
 
 GameState.prototype.load = function()
@@ -20,6 +21,10 @@ GameState.prototype.unload = function()
 GameState.prototype.update = function(dt)
 {
 
+    this.FlowFieldApple.Init(50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, this.Timer, this.Timer, 12, 6, 0.4); 
+    this.Timer += dt * 0.1;
+    
+    
 }
 
 GameState.prototype.draw = function(dt)

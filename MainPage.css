@@ -108,3 +108,43 @@ a:hover{
     display: block;
 }
 
+#borderTopLeft
+{
+    vertical-align: top;
+    float : left;
+    
+    -ms-transform: rotate(0eg); /* IE 9 */
+    -webkit-transform: rotate(0deg); /* Chrome, Safari, Opera */
+    transform: rotate(0deg);
+}
+
+#borderTopRight
+{
+    vertical-align: top;
+    float : right;
+    
+    -ms-transform: rotate(90eg); /* IE 9 */
+    -webkit-transform: rotate(90deg); /* Chrome, Safari, Opera */
+    transform: rotate(90deg);
+}
+
+#borderBottomLeft
+{
+   vertical-align: bottom;
+
+   
+   -ms-transform: rotate(-90eg); /* IE 9 */
+   -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+   transform: rotate(-90deg);
+}
+
+#borderBottomRight
+{
+   display: block;
+   vertical-align: bottom;
+   float : right;
+   
+    -ms-transform: rotate(180eg); /* IE 9 */
+    -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+    transform: rotate(180deg);
+}

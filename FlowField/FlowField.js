@@ -59,53 +59,59 @@
  
  function lerp(left, right, ratio)
  {
-	 return left * (1 - ratio) + right * ratio;
+	 return left + ratio * (right - left);
  }
  
  function perlin(x,y,z)
  {
-	 var xi = x & 255;
-	 var yi = y & 255;
-	 var zi = z & 255;
+	 var xi = Math.round(x);
+	 var yi = Math.round(y);
+	 var zi = Math.round(z);
 	 
 	 var xf = x - xi;
 	 var yf = y - yi;
 	 var zf = z - zi;
-	 
+     
+	 xi = xi % 255;
+	 yi = yi % 255;
+	 zi = zi % 255;
+     
 	 var u = fade(xf);
 	 var v = fade(yf);
 	 var w = fade(zf);
 	 
 	var aaa, aba, aab, abb, baa, bba, bab, bbb;
-    aaa = p[p[p[    xi ]+     yi ]+    zi ];
-    aba = p[p[p[    xi ]+ 1 + yi ]+    zi ];
-    aab = p[p[p[    xi ]+     yi ]+ 1 + zi ];
-    abb = p[p[p[    xi ]+ 1 + yi ]+ 1 + zi ];
-    baa = p[p[p[1 + xi ]+     yi ]+    zi ];
-    bba = p[p[p[1 + xi ]+ 1 + yi ]+    zi ];
-    bab = p[p[p[1 + xi ]+     yi ]+ 1 + zi ];
-    bbb = p[p[p[1 + xi ]+ 1 + yi ]+ 1 + zi ];
+    aaa = p[p[p[    xi ]+     yi ]+     zi];
+    aba = p[p[p[    xi ]+ 1 + yi ]+     zi];
+    aab = p[p[p[    xi ]+     yi ]+ 1 + zi];
+    abb = p[p[p[    xi ]+ 1 + yi ]+ 1 + zi];
+    baa = p[p[p[1 + xi ]+     yi ]+     zi];
+    bba = p[p[p[1 + xi ]+ 1 + yi ]+     zi];
+    bab = p[p[p[1 + xi ]+     yi ]+ 1 + zi];
+    bbb = p[p[p[1 + xi ]+ 1 + yi ]+ 1 + zi];
 	 
 	 
 	var x1, x2, y1, y2;
-    x1 = lerp(    grad (aaa, xf  , yf  , zf), 
+    x1 = lerp(  grad (aaa, xf  , yf  , zf), 
                 grad (baa, xf-1, yf  , zf),             
                 u);                                    
-    x2 = lerp(    grad (aba, xf  , yf-1, zf),           
+    x2 = lerp(  grad (aba, xf  , yf-1, zf),           
                 grad (bba, xf-1, yf-1, zf),            
-                  u);
+                u);
+                    
     y1 = lerp(x1, x2, v);
 
 	
-    x1 = lerp(    grad (aab, xf  , yf  , zf-1),
-                grad (bab, xf-1, yf  , zf-1),
-                u);
-    x2 = lerp(    grad (abb, xf  , yf-1, zf-1),
-                  grad (bbb, xf-1, yf-1, zf-1),
-                  u);
+    x1 = lerp(   grad (aab, xf  , yf  , zf-1),
+                 grad (bab, xf-1, yf  , zf-1),
+                 u);
+    x2 = lerp(   grad (abb, xf  , yf-1, zf-1),
+                 grad (bbb, xf-1, yf-1, zf-1),
+                 u);
     y2 = lerp (x1, x2, v);
     
-    return (lerp (y1, y2, w) + 1 ) / 2;  
+    var finalreturn = (lerp (y1, y2, w) + 1 ) / 2;  
+    return finalreturn;
 	 
  }
  
@@ -124,48 +130,73 @@
 		amplitude *= persistance;
 		frequency *= 2.0;
 	}
-	var ababana = total / maxValue;
-	return ababana;
+	var result = total / maxValue;
+	return result;
  }
  
- var FlowField = function(width, height)
+ var FlowField = function()
  {
 	this.vectors_x = [];
 	this.vectors_y = [];
+    
+    this.values = [];
  }
  
- FlowField.prototype.Init = function(width, height, seed, octaves, persistance)
+ FlowField.prototype.Init = function(horiz_samples, vert_samples, width, height, sample_offset_x, sample_offset_y, seed, octaves, persistance)
  {
-	 this.width = width;
-	 this.height = height;
+	 this.horiz_samples = horiz_samples;
+	 this.vert_samples = vert_samples;
+     
+     this.width = width;
+     this.height = height;
 	 
-	for (var x = 0; x < width; x++)
+	for (var x = 0; x < horiz_samples; x++)
 	{
-		for (var y = 0; y < height; y++)
+		for (var y = 0; y < vert_samples; y++)
 		{
-			var vector_index = x * width + y;
+			var vector_index = x * horiz_samples + y;
 			//puts it as an angle
-			var sample = octavePerlin(x, y, seed, octaves, persistance);// * 2.0 * Math.PI;
+			var sample = octavePerlin(x / horiz_samples + sample_offset_x, y / vert_samples + sample_offset_y, seed, octaves, persistance);
 			
-			this.vectors_x[vector_index] = Math.cos(sample);
-			this.vectors_y[vector_index] = Math.sin(sample);
+			this.vectors_x[vector_index] = Math.cos(sample * 2.0 * Math.PI);
+			this.vectors_y[vector_index] = Math.sin(sample * 2.0 * Math.PI);
+            this.values[vector_index] = sample;
 		}
 	}
+ }
+ 
+ FlowField.prototype.getSampleAtPoint = function(x, y)
+ {
+
+ 
+ 
  }
  
  FlowField.prototype.draw = function()
  {
 	for (var i = 0; i < this.vectors_x.length; i++)
 	{
-		var x = i / this.width;
-		var y = i % this.height;
+		var x = i / this.horiz_samples;
+		var y = i % this.vert_samples;
 		
+        var horiz_spacing =  this.width / this.horiz_samples;
+        var vert_spacing =   this.height / this.vert_samples;
+        
 		context.save();
 		context.beginPath();
-			context.strokeStyle = "#FF0000";
-			context.LineWidth = 5;
-			context.moveTo(x, y);
-			context.lineTo(this.vectors_x[i] + x, this.vectors_x[i] + y);
+			//context.strokeStyle = "#FFFFFF";
+            context.strokeStyle = " rgb("   + Math.round(this.values[i] * 255)
+                                     + ", " + Math.round(this.values[i] * 255) 
+                                     + ", " + Math.round(this.values[i] * 255) + "  ) ";
+                                            
+            //context.strokeStyle = " rgb("+ (Math.round(this.vectors_x[i] * 255)) + ","
+            //                             + (Math.round(this.vectors_y[i] * 255)) + ", 0)";
+			//context.strokeStyle =  "   linear-gradient(#FF0000, #0000FF)    -moz-linear-gradient(#FF0000, #0000FF) ";
+            context.LineWidth = 5;
+			context.moveTo( x * horiz_spacing,
+                            y * vert_spacing);
+			context.lineTo( this.vectors_x[i] * horiz_spacing * 0.5 + x * horiz_spacing,
+                            this.vectors_y[i] * vert_spacing  * 0.5 + y * vert_spacing);
 		context.stroke();
 	}
  }
