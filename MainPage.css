@@ -23,11 +23,26 @@ h3{
 }
 
 html {
-    height: 110%;
-    background: -webkit-linear-gradient( #646165,#646165,#FAFAFA); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(		 #646165,#646165,#FAFAFA); 	/* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(	 #646165,#646165,#FAFAFA); 	/* For Firefox 3.6 to 15 */
-    background: linear-gradient(		 #646165,#646165,#FAFAFA); 	/* Standard syntax */
+    height: 100%;
+    
+    /*background: -webkit-linear-gradient( #646165,#646165,#FAFAFA); /* For Safari 5.1 to 6.0 */     
+    /*background: -o-linear-gradient(		 #646165,#646165,#FAFAFA); 	/* For Opera 11.1 to 12.0 */ 
+    /*background: -moz-linear-gradient(	 #646165,#646165,#FAFAFA); 	/* For Firefox 3.6 to 15 */      
+    /*background: linear-gradient(		 #646165,#646165,#FAFAFA); 	/* Standard syntax */            
+    
+    background: -webkit-radial-gradient(                 50% 30%, closest-side ,#FAFAFA,    #FAFAFA, #FAFAFA,  #646165); /* For Safari 5.1 to 6.0 */     
+    background: -o-radial-gradient(		                 50% 30%, closest-side ,#FAFAFA,    #FAFAFA, #FAFAFA,  #646165); 	/* For Opera 11.1 to 12.0 */ 
+    background: -moz-radial-gradient(	                 50% 30%, closest-side ,#FAFAFA,    #FAFAFA, #FAFAFA,  #646165); 	/* For Firefox 3.6 to 15 */      
+    background: radial-gradient(		 closest-side at 50% 30%,               #FAFAFA,    #FAFAFA, #FAFAFA,  #646165); 	/* Standard syntax */        
+    
+    
+}
+
+canvas {
+    margin-left : auto;
+    margin-right : auto;
+    display:    block;
+    border : 5px solid black;
 }
 
 a:link{
@@ -77,6 +92,7 @@ a:hover{
 
 #Middle{
     background : #4f5055;
+    background-color : rgba(79, 80, 85, 0.5);
     width : 75%;
     min-width : 500px;
     margin-left : auto;
@@ -87,6 +103,7 @@ a:hover{
 #MiddleContent
 {
     background : #3f4045;
+    background-color : rgba(63, 64, 69, 0.5);
     width : 480px;
     margin-left : auto;
     margin-right : auto;

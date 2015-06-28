@@ -30,6 +30,8 @@ var Keyboard = function() {
 Keyboard.prototype.onKeyDown = function(evt) 
 {
 	this.keys[evt.keyCode] = true;
+    //eats the keycode to stop scrolling issue
+    return false;
 };
 
 Keyboard.prototype.onKeyUp = function(evt) 

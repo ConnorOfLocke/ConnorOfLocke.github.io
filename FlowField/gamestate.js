@@ -23,6 +23,9 @@ var GameState = function()
     this.Persistance = 0.5;
     this.Octaves = 5;
     this.Detail = 0.1;
+    
+    this.UI_on = true;
+    this.Vectors_on = true;
 }
 
 GameState.prototype.load = function()
@@ -136,7 +139,7 @@ GameState.prototype.draw = function(dt)
     if (input.isKeyDown(input.KEY_P))
         context.fillStyle = "#F0F";
     else
-        context.fillStyle = "#FF0";
+        context.fillStyle = "#FFF";
     var Message1 = "'P' to change Persistance : " + this.Persistance;
     context.fillText(Message1, SCREEN_WIDTH/4, 20);
     
@@ -144,7 +147,7 @@ GameState.prototype.draw = function(dt)
     if (input.isKeyDown(input.KEY_O))
         context.fillStyle = "#F0F";
     else
-        context.fillStyle = "#FF0";
+        context.fillStyle = "#FFF";
     var Message2 = "'O' to change Octaves :" + Math.floor(this.Octaves);
     context.fillText(Message2, SCREEN_WIDTH/4, 30);
     
@@ -152,16 +155,23 @@ GameState.prototype.draw = function(dt)
     if (input.isKeyDown(input.KEY_R))
         context.fillStyle = "#F0F";
     else
-        context.fillStyle = "#FF0";
+        context.fillStyle = "#FFF";
     var Message3 = "'R' to reset Boids";
     context.fillText(Message3, SCREEN_WIDTH/4, 40);
+    
+    if (input.isKeyDown(input.KEY_SPACE))
+        context.fillStyle = "#F0F";
+    else
+        context.fillStyle = "#FFF";
+    var Message3 = "'Space' to offset sampling";
+    context.fillText(Message3, SCREEN_WIDTH/4, 50);
     
     if (mouseInput.getMouseState())
         context.fillStyle = "#F0F";
     else
-        context.fillStyle = "#FF0";
+        context.fillStyle = "#FFF";
     var Message3 = "Left Click to set destination";
-    context.fillText(Message3, SCREEN_WIDTH/4, 50);
+    context.fillText(Message3, SCREEN_WIDTH/4, 60);
    
     context.beginPath();
     context.strokeStyle = "#FF0";

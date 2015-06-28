@@ -9,10 +9,10 @@ var Actor = function(_x, _y, _max_speed, _image_file)
     this.rotation = 0;
     
     this.max_speed = _max_speed;
-    
+        
     this.image = document.createElement("img");
     this.image.src = _image_file;
-    
+
     this.destination_x = SCREEN_WIDTH / 2;
     this.destination_y = SCREEN_HEIGHT / 2;
 };

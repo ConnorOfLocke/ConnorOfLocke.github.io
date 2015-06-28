@@ -29,7 +29,7 @@ SplashState.prototype.draw = function(dt)
 	context.fillStyle = "#aaa";		
 	context.fillRect(0, 0, canvas.width, canvas.height);
 
-	context.font = "25pt Veranda";
+	context.font = "25pt Courier New";
 	context.fillStyle = "#FF0";
 	var width = context.measureText( "Flow Field using perlin noise").width;
 	context.fillText("Flow Field using perlin noise", SCREEN_WIDTH/2 - width/2, SCREEN_HEIGHT/2);
