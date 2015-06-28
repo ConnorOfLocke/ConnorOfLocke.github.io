@@ -64,9 +64,9 @@
  
  function perlin(x,y,z)
  {
-	 var xi = Math.round(x);
-	 var yi = Math.round(y);
-	 var zi = Math.round(z);
+	 var xi = Math.floor(x);
+	 var yi = Math.floor(y);
+	 var zi = Math.floor(z);
 	 
 	 var xf = x - xi;
 	 var yf = y - yi;
@@ -110,7 +110,7 @@
                  u);
     y2 = lerp (x1, x2, v);
     
-    var finalreturn = (lerp (y1, y2, w) + 1 ) / 2;  
+    var finalreturn = lerp (y1, y2, w);  
     return finalreturn;
 	 
  }
@@ -142,7 +142,7 @@
     this.values = [];
  }
  
- FlowField.prototype.Init = function(horiz_samples, vert_samples, width, height, sample_offset_x, sample_offset_y, seed, octaves, persistance)
+ FlowField.prototype.Init = function(horiz_samples, vert_samples, width, height, detail, sample_offset_x, sample_offset_y, seed, octaves, persistance)
  {
 	 this.horiz_samples = horiz_samples;
 	 this.vert_samples = vert_samples;
@@ -150,16 +150,18 @@
      this.width = width;
      this.height = height;
 	 
+    octaves = Math.floor(octaves);
+     
 	for (var x = 0; x < horiz_samples; x++)
 	{
 		for (var y = 0; y < vert_samples; y++)
 		{
 			var vector_index = x * horiz_samples + y;
 			//puts it as an angle
-			var sample = octavePerlin(x / horiz_samples + sample_offset_x, y / vert_samples + sample_offset_y, seed, octaves, persistance);
+			var sample = octavePerlin(x * detail + sample_offset_x, y * detail  + sample_offset_y, seed, octaves, persistance);
 			
-			this.vectors_x[vector_index] = Math.cos(sample * 2.0 * Math.PI);
-			this.vectors_y[vector_index] = Math.sin(sample * 2.0 * Math.PI);
+			this.vectors_x[vector_index] = Math.cos(sample * 2 * Math.PI);
+			this.vectors_y[vector_index] = Math.sin(sample * 2 * Math.PI);
             this.values[vector_index] = sample;
 		}
 	}
@@ -173,8 +175,8 @@
     checkCoord_x = checkCoord_x / this.width;
     checkCoord_y = checkCoord_y / this.height;
     
-    checkCoord_x = Math.round(checkCoord_x * this.horiz_samples);
-    checkCoord_y = Math.round(checkCoord_y * this.vert_samples);
+    checkCoord_x = Math.floor(checkCoord_x * this.horiz_samples);
+    checkCoord_y = Math.floor(checkCoord_y * this.vert_samples);
     
     var index = checkCoord_x * this.horiz_samples + checkCoord_y;
    
@@ -194,7 +196,16 @@
         
 		context.save();
 		context.beginPath();
-			context.strokeStyle = "#FFFFFF";
+            if (this.vectors_x[i] > 0 && this.vectors_y[i] > 0)
+                context.strokeStyle = "#888888";
+            else if(this.vectors_x[i] < 0 && this.vectors_y[i] > 0)
+                context.strokeStyle = "#000088";
+            else if (this.vectors_x[i] < 0 && this.vectors_y[i] < 0)
+                context.strokeStyle = "#008800";
+            else if (this.vectors_x[i] > 0 && this.vectors_y[i] < 0)
+                context.strokeStyle = "#880000";
+            
+			//context.strokeStyle = "#FFFFFF";
             //context.strokeStyle = " rgb("   + Math.round(this.values[i] * 255)
             //                         + ", " + Math.round(this.values[i] * 255) 
             //                         + ", " + Math.round(this.values[i] * 255) + "  ) ";

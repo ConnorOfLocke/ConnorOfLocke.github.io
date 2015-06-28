@@ -9,14 +9,17 @@ var Keyboard = function() {
 	
 	this.keys = new Array();
 	
-	// key constants
-	// Go here for a list of key codes: https://developer.mozilla.org/en-US/docs/DOM/KeyboardEvent
+	//list of key codes: https://developer.mozilla.org/en-US/docs/DOM/KeyboardEvent
 	this.KEY_SPACE = 32;
 	this.KEY_LEFT = 37;
 	this.KEY_UP = 38;
 	this.KEY_RIGHT = 39;
 	this.KEY_DOWN = 40;
 	
+    this.KEY_O = 79;
+    this.KEY_P = 80;
+    this.KEY_R = 82;
+    
 	this.KEY_A = 65;
 	this.KEY_D = 68;
 	this.KEY_S = 83;

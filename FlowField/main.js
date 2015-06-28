@@ -31,6 +31,7 @@ SceneManager.push( new GameState() );
 SceneManager.push( new SplashState() );
 
 var input = new Keyboard();
+var mouseInput = new Mouse();
 var TotalTimePassed = 0;
 
 function run()

@@ -3,7 +3,7 @@ var MOUSE_DOWN = 1;
 
 var Mouse = function()
 {
-	var mouseState = MOUSE_UP;
+	this.mouseState = MOUSE_UP;
 	
 	this.x = 0;
 	this.y = 0;
@@ -30,7 +30,7 @@ Mouse.prototype.mouseDown = function(evt)
 	this.x = evt.clientX - rect.left;
 	this.y = evt.clientY - rect.top;
 	
-	mouseState = MOUSE_DOWN;
+	this.mouseState = MOUSE_DOWN;
 }
 Mouse.prototype.mouseUp = function(evt)
 {
@@ -39,7 +39,7 @@ Mouse.prototype.mouseUp = function(evt)
 	this.x = evt.clientX - rect.left;
 	this.y = evt.clientY - rect.top;
 	
-	mouseState = MOUSE_UP;
+	this.mouseState = MOUSE_UP;
 }
 
 Mouse.prototype.getX = function()

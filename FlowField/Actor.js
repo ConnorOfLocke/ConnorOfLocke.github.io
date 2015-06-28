@@ -1,4 +1,4 @@
-var Actor = function(_x, _y, _max_speed)
+var Actor = function(_x, _y, _max_speed, _image_file)
 {
     this.position_x = _x;
     this.position_y = _y;
@@ -11,16 +11,23 @@ var Actor = function(_x, _y, _max_speed)
     this.max_speed = _max_speed;
     
     this.image = document.createElement("img");
-    this.image.src = "banana.png";
+    this.image.src = _image_file;
+    
+    this.destination_x = SCREEN_WIDTH / 2;
+    this.destination_y = SCREEN_HEIGHT / 2;
 };
 
 Actor.prototype.update = function(dt)
 {
     this.position_x += this.velocity_x * dt;
-    this.position_x += this.velocity_y * dt;
+    this.position_y += this.velocity_y * dt;
 
     var cur_speed = (this.velocity_x * this.velocity_x + this.velocity_y * this.velocity_y);
 
+    //adds a velocity towards destination
+    this.velocity_x += (this.destination_x - this.position_x)* 10 * dt;
+    this.velocity_y += (this.destination_y - this.position_y)* 10 * dt;
+    
     //normalises the speed to max_speed
     if (cur_speed > this.max_speed)
     {
@@ -30,6 +37,8 @@ Actor.prototype.update = function(dt)
         this.velocity_x *= this.max_speed;
         this.velocity_y *= this.max_speed;
     }
+    
+
     
     //bounce off the sides
     if (this.position_x + this.image.width / 2.0 > SCREEN_WIDTH)
