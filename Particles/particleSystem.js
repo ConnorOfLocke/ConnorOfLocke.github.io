@@ -319,8 +319,8 @@ Emitter.prototype.update = function(dt)
             this.p_position_x[i] = SIMD.Float32x4.add( this.p_position_x[i], updatedVelocity_x);
             this.p_position_y[i] = SIMD.Float32x4.add( this.p_position_y[i], updatedVelocity_y);
             
-           var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
-           this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
+            var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
+            this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
             
             this.p_life[i] = SIMD.Float32x4.sub( this.p_life[i], deltaTime);
             this.p_alpha[i] = SIMD.Float32x4.div(this.p_life[i] , this.p_maxLife[i]);
@@ -336,22 +336,26 @@ Emitter.prototype.draw = function()
       
 		if (this.p_life[i].x_ > 0)
 		{
-			var origin_x = this.p_image.width / 2;
+			var origin_x = this.p_image.width  / 2;
 			var origin_y = this.p_image.height / 2;
 			
 			var scale_x = this.p_size_x[i].x_ / this.p_image.width;
 			var scale_y = this.p_size_y[i].x_ / this.p_image.height;
 			
 			context.save();
-				context.translate(this.p_position_x[i].x_, this.p_position_y[i].x_ );
+				context.translate(	this.p_position_x[i].x_ + origin_x * scale_x, 
+									this.p_position_y[i].x_ + origin_y * scale_y);
+				
+				context.scale(scale_x, scale_y);
 				context.rotate(this.p_rotation[i].x_ );
 				context.globalAlpha = this.p_alpha[i].x_;
-				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].x_, this.p_size_y[i].x_ );
+				context.drawImage( this.p_image, -origin_x,
+												 -origin_y);
 			context.restore();
 		}
         
         if (this.p_life[i].y_ > 0)
-		{
+		
 			var origin_x = this.p_image.width / 2;
 			var origin_y = this.p_image.height / 2;
 			
@@ -359,12 +363,15 @@ Emitter.prototype.draw = function()
 			var scale_y = this.p_size_y[i].y_ / this.p_image.height;
 			
 			context.save();
-				context.translate(this.p_position_x[i].y_ , this.p_position_y[i].y_ );
+				context.translate(this.p_position_x[i].y_   + origin_x * scale_x,
+								  this.p_position_y[i].y_ + origin_y * scale_y);
+				context.scale(scale_x, scale_y);
 				context.rotate(this.p_rotation[i].y_ );
 				context.globalAlpha = this.p_alpha[i].y_ ;
-				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].y_ , this.p_size_y[i].y_ );
+				context.drawImage( this.p_image, -origin_x,
+												 -origin_y );
 			context.restore();
-		}
+		
         
         if (this.p_life[i].z_ > 0)
 		{
@@ -375,10 +382,13 @@ Emitter.prototype.draw = function()
 			var scale_y = this.p_size_y[i].z_ / this.p_image.height;
 			
 			context.save();
-				context.translate(this.p_position_x[i].z_, this.p_position_y[i].z_ );
+				context.translate(this.p_position_x[i].z_ + origin_x * scale_x,
+								  this.p_position_y[i].z_ + origin_y * scale_y);		
+				context.scale(scale_x, scale_y);
 				context.rotate(this.p_rotation[i].z_ );
 				context.globalAlpha = this.p_alpha[i].z_ ;
-				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].z_ , this.p_size_y[i].z_ );
+				context.drawImage( this.p_image, -origin_x,
+												 -origin_y);
 			context.restore();
 		}
         
@@ -391,10 +401,13 @@ Emitter.prototype.draw = function()
 			var scale_y = this.p_size_y[i].w_ / this.p_image.height;
 			
 			context.save();
-				context.translate(this.p_position_x[i].w_, this.p_position_y[i].w_ );
+				context.translate(	this.p_position_x[i].w_ + origin_x * scale_x,
+									this.p_position_y[i].w_ + origin_y * scale_y );
+				context.scale(scale_x, scale_y);
 				context.rotate(this.p_rotation[i].w_ );
 				context.globalAlpha = this.p_alpha[i].w_ ;
-				context.drawImage( this.p_image, origin_x * scale_x, origin_y * scale_y, this.p_size_x[i].w_ , this.p_size_y[i].w_ );
+				context.drawImage( this.p_image, -origin_x,
+												 -origin_y);
 			context.restore();
 		}
 	}	
