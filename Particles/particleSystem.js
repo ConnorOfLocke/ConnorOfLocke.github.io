@@ -144,8 +144,8 @@ Emitter.prototype.emit = function(dt)
         this.p_velocity_x[p_index].x_ = newVelocity_x;
 		this.p_velocity_y[p_index].x_ = newVelocity_y;
 
-        //this.p_rotation[p_index].x_ = random(this.minRotaion, this.maxRotation);
-        //this.p_rotation_speed[p_index].x_ = random( this.minRotation_speed, this.maxRotation_speed);
+        this.p_rotation[p_index].x_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].x_ = random( this.minRotation_speed, this.maxRotation_speed);
         
         this.p_life[p_index].x_ = random( this.minLife, this.maxLife);
 		this.p_maxLife[p_index].x_ = this.p_life[p_index].x_;
@@ -187,8 +187,8 @@ Emitter.prototype.emit = function(dt)
         this.p_velocity_x[p_index].y_ = newVelocity_x;
 		this.p_velocity_y[p_index].y_ = newVelocity_y;
         
-        //this.p_rotation[p_index].y_ = random(this.minRotaion, this.maxRotation);
-        //this.p_rotation_speed[p_index].y_ = random( this.minRotation_speed, this.maxRotation_speed);
+        this.p_rotation[p_index].y_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].y_ = random( this.minRotation_speed, this.maxRotation_speed);
         
         this.p_life[p_index].y_ = random( this.minLife, this.maxLife);
 		this.p_maxLife[p_index].y_ = this.p_life[p_index].y_;
@@ -230,8 +230,8 @@ Emitter.prototype.emit = function(dt)
         this.p_velocity_x[p_index].z_ = newVelocity_x;
 		this.p_velocity_y[p_index].z_ = newVelocity_y;
         
-        //this.p_rotation[p_index].z_ = random(this.minRotaion, this.maxRotation);
-        //this.p_rotation_speed[p_index].z_ = random( this.minRotation_speed, this.maxRotation_speed);
+        this.p_rotation[p_index].z_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].z_ = random( this.minRotation_speed, this.maxRotation_speed);
         
         this.p_life[p_index].z_ = random( this.minLife, this.maxLife);
 		this.p_maxLife[p_index].z_ = this.p_life[p_index].z_;
@@ -273,8 +273,8 @@ Emitter.prototype.emit = function(dt)
         this.p_velocity_x[p_index].w_ = newVelocity_x;
 		this.p_velocity_y[p_index].w_ = newVelocity_y;
         
-        //this.p_rotation[p_index].w_ = random(this.minRotaion, this.maxRotation);
-        //this.p_rotation_speed[p_index].w_ = random( this.minRotation_speed, this.maxRotation_speed);
+        this.p_rotation[p_index].w_ = random(this.minRotaion, this.maxRotation);
+        this.p_rotation_speed[p_index].w_ = random( this.minRotation_speed, this.maxRotation_speed);
         
         this.p_life[p_index].w_ = random( this.minLife, this.maxLife);
 		this.p_maxLife[p_index].w_ = this.p_life[p_index].w_;
@@ -319,8 +319,8 @@ Emitter.prototype.update = function(dt)
             this.p_position_x[i] = SIMD.Float32x4.add( this.p_position_x[i], updatedVelocity_x);
             this.p_position_y[i] = SIMD.Float32x4.add( this.p_position_y[i], updatedVelocity_y);
             
-           // var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
-           // this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
+           var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
+           this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
             
             this.p_life[i] = SIMD.Float32x4.sub( this.p_life[i], deltaTime);
             this.p_alpha[i] = SIMD.Float32x4.div(this.p_life[i] , this.p_maxLife[i]);
