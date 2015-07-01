@@ -144,6 +144,7 @@ Emitter.prototype.emit = function(dt)
         this.p_velocity_x[p_index].x_ = newVelocity_x;
 		this.p_velocity_y[p_index].x_ = newVelocity_y;
 
+		//sets rotation
         this.p_rotation[p_index].x_ = random(this.minRotaion, this.maxRotation);
         this.p_rotation_speed[p_index].x_ = random( this.minRotation_speed, this.maxRotation_speed);
         
@@ -304,27 +305,24 @@ Emitter.prototype.update = function(dt)
     
     for (var i = 0 ; i < this.p_life.length; i++)
 	{
-        //check if particle is alive and stuff here
-        if ( SIMD.Float32x4.greaterThan( this.p_life[i], Zero))
-        {
-            this.p_velocity_x[i] = SIMD.Float32x4.add( this.p_velocity_x [i], gravity_x );
-            this.p_velocity_y[i] = SIMD.Float32x4.add( this.p_velocity_y [i], gravity_y );
-            
-            this.p_velocity_x[i] = SIMD.Float32x4.add( this.p_velocity_x [i], wind_x );
-            this.p_velocity_y[i] = SIMD.Float32x4.add( this.p_velocity_y [i], wind_y );
-            
-            var updatedVelocity_x = SIMD.Float32x4.mul( this.p_velocity_x [i], deltaTime ); 
-            var updatedVelocity_y = SIMD.Float32x4.mul( this.p_velocity_y [i], deltaTime ); 
-            
-            this.p_position_x[i] = SIMD.Float32x4.add( this.p_position_x[i], updatedVelocity_x);
-            this.p_position_y[i] = SIMD.Float32x4.add( this.p_position_y[i], updatedVelocity_y);
-            
-            var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
-            this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
-            
-            this.p_life[i] = SIMD.Float32x4.sub( this.p_life[i], deltaTime);
-            this.p_alpha[i] = SIMD.Float32x4.div(this.p_life[i] , this.p_maxLife[i]);
-        }
+		this.p_velocity_x[i] = SIMD.Float32x4.add( this.p_velocity_x [i], gravity_x );
+		this.p_velocity_y[i] = SIMD.Float32x4.add( this.p_velocity_y [i], gravity_y );
+		
+		this.p_velocity_x[i] = SIMD.Float32x4.add( this.p_velocity_x [i], wind_x );
+		this.p_velocity_y[i] = SIMD.Float32x4.add( this.p_velocity_y [i], wind_y );
+		
+		var updatedVelocity_x = SIMD.Float32x4.mul( this.p_velocity_x [i], deltaTime ); 
+		var updatedVelocity_y = SIMD.Float32x4.mul( this.p_velocity_y [i], deltaTime ); 
+		
+		this.p_position_x[i] = SIMD.Float32x4.add( this.p_position_x[i], updatedVelocity_x);
+		this.p_position_y[i] = SIMD.Float32x4.add( this.p_position_y[i], updatedVelocity_y);
+		
+		var rotationDelta = new SIMD.Float32x4.mul(this.p_rotation_speed[i], deltaTime);
+		this.p_rotation[i] = new SIMD.Float32x4.add( this.p_rotation_speed[i], rotationDelta);
+		
+		this.p_life[i] = SIMD.Float32x4.sub( this.p_life[i], deltaTime);
+		this.p_alpha[i] = SIMD.Float32x4.div(this.p_life[i] , this.p_maxLife[i]);
+	
 	}
 }
 
@@ -355,7 +353,7 @@ Emitter.prototype.draw = function()
 		}
         
         if (this.p_life[i].y_ > 0)
-		
+		{
 			var origin_x = this.p_image.width / 2;
 			var origin_y = this.p_image.height / 2;
 			
@@ -371,7 +369,7 @@ Emitter.prototype.draw = function()
 				context.drawImage( this.p_image, -origin_x,
 												 -origin_y );
 			context.restore();
-		
+		}
         
         if (this.p_life[i].z_ > 0)
 		{
