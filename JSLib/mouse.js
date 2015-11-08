@@ -13,6 +13,10 @@ var Mouse = function()
 	window.addEventListener('mousemove', function(evt) { self.mouseMove(evt);});
 	window.addEventListener('mousedown', function(evt) { self.mouseDown(evt);});
 	window.addEventListener('mouseup',	 function(evt) { self.mouseUp(evt);});
+
+	window.addEventListener('touchmove', function(evt) { self.touchMove(evt);});
+	window.addEventListener('touchstart', function(evt) { self.touchStart(evt);});
+	window.addEventListener('touchend',	 function(evt) { self.touchEnd(evt);});
 }
 
 Mouse.prototype.mouseMove = function(evt)
@@ -40,6 +44,29 @@ Mouse.prototype.mouseUp = function(evt)
 	this.y = evt.clientY - rect.top;
 	
 	this.mouseState = MOUSE_UP;
+}
+Mouse.prototype.touchStart = function(evt)
+{
+	var rect = canvas.getBoundingClientRect();
+	
+	this.x = evt.touches[0].clientX - rect.left;
+	this.y = evt.touches[0].clientY - rect.top;
+
+	this.mouseState = MOUSE_DOWN;
+}
+
+Mouse.prototype.touchEnd = function(evt)
+{
+	var rect = canvas.getBoundingClientRect();
+
+	this.mouseState = MOUSE_UP;
+}
+Mouse.prototype.touchMove = function(evt)
+{
+	var rect = canvas.getBoundingClientRect();
+	
+	this.x = evt.touches[0].clientX - rect.left;
+	this.y = evt.touches[0].clientY - rect.top;
 }
 
 Mouse.prototype.getX = function()

@@ -3,45 +3,26 @@ function random(min, max)
 	return min + (max - min) * Math.random();
 }
 
-//https://www.dropbox.com/s/wiuded31j5qn8th/Scene_Manager_Example.zip?dl=0
-
-//var Particle = function(imageFilename)
-//{
-//	this.position = new Vector2();
-//	this.size = new Vector2();
-//	
-//	this.image = document.createElement("img");
-//	this.image.src = imageFilename;
-//	
-//	this.velocity = new Vector2();
-//	this.acceleration = new Vector2();
-//	
-//	this.rotation = 0;
-//	this.life = 0;
-//	
-//	this.alpha = 0;
-//}
-
 var Emitter = function(imageFilename, PositionX, PositionY, numParticles)
 {
 	//for rilly rilly fast computation splits each part of the particle struct into arrays
-	this.p_position_x = [];
-	this.p_position_y = [];
-	this.p_size_x = [];
-	this.p_size_y = [];
+	this.p_position_x = new Array(numParticles);
+	this.p_position_y = new Array(numParticles);
+	this.p_size_x = new Array(numParticles);
+	this.p_size_y = new Array(numParticles);
 	
 	this.p_image = document.createElement("img");
 	this.p_image.src = imageFilename;
 	
-	this.p_velocity_x = [];
-	this.p_velocity_y = [];
+	this.p_velocity_x = new Array(numParticles);
+	this.p_velocity_y = new Array(numParticles);
 	
-	this.p_rotation = [];
-	this.p_rotation_speed = [];
-	this.p_life = [];
-	this.p_maxLife = [];
+	this.p_rotation = new Array(numParticles);
+	this.p_rotation_speed = new Array(numParticles);
+	this.p_life = new Array(numParticles);
+	this.p_maxLife = new Array(numParticles);
 	
-	this.p_alpha = [];
+	this.p_alpha = new Array(numParticles);
 
 	this.maxNumParticles = numParticles;
 	this.elapsedEmissionTime = 0;
