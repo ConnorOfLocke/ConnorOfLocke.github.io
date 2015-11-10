@@ -3,6 +3,15 @@ h1 {
     text-align: center;
     font-family: 'Raleway', sans-serif;
     font-size: 200%;
+    margin-bottom: 0px;
+    margin-top : 0;
+    padding: 0;
+}
+
+h1#spaced {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    font-size: 200%;
     margin-bottom: 12px;
     margin-top : 0;
     padding: 0;
@@ -58,6 +67,11 @@ a:link{
     /*color : #FF0000;*/
     color : #ffffff;
     
+	  -o-transition:.5s;
+	  -ms-transition:.5s;
+	  -moz-transition:.5s;
+	  -webkit-transition:.5s;
+	
     text-decoration: none;
 }
 
@@ -68,6 +82,10 @@ a:visited{
 
 a:hover{
     color : #5F5AA2;
+}
+
+iframe{
+	align : center;
 }
 
 #Header{
@@ -93,8 +111,8 @@ a:hover{
 
 #TitleLink_Left
 {
-    background : #ee0000;
-    background-color : rgba(100, 0, 0, 0.5);    
+    background : #000000;
+    background-color : rgba(0, 0, 0, 0.5);    
     width: 25%;
     padding:  0;
     margin-left : auto;
@@ -104,8 +122,8 @@ a:hover{
 }
 #TitleLink_Right
 {
-    background : #ee0000;
-    background-color : rgba(100, 0, 0, 0.5);
+    background : #000000;
+    background-color : rgba(0, 0, 0, 0.5);
     width: 25%;    
     padding:  0;
     margin-left : auto;

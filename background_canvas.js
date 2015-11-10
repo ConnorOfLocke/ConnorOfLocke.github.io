@@ -99,9 +99,9 @@ function update()
     //draw te ocean
     context.save();
     context.fillStyle = "#2a0042";
-    context.fillRect(0, canvas.height - (canvas.height / 1920) * (220), canvas.width, 1000);
+    context.fillRect(0, canvas.height - (canvas.height / 1920) * (180  + 10 * Math.sin(new Date().getTime() * 0.002)), canvas.width, 1000);
     context.fillStyle = "#190031";    
-    context.fillRect(0, canvas.height - (canvas.height / 1920) * (250), canvas.width, 1000);
+    context.fillRect(0, canvas.height - (canvas.height / 1920) * (200  + 10 * Math.sin(new Date().getTime() * 0.001)), canvas.width, 1000);
     context.restore();
    
     //update and draw
@@ -109,7 +109,7 @@ function update()
     {
         if (back_particles[i].lifetime > 0)
         {
-            var life_left = (back_particles[i].lifetime - min_life_time) - (max_life_time - min_life_time);
+            var life_left = back_particles[i].lifetime / max_life_time;
             var speed = life_left * max_particle_speed;
             back_particles[i].x += back_particles[i].vel_x * speed * dt;
             back_particles[i].y += back_particles[i].vel_y * speed * dt;
@@ -119,9 +119,8 @@ function update()
             
             back_particles[i].lifetime -= dt;
             
-
            context.save();
-                context.globaaAlpha = life_left;
+                context.globalAlpha = (life_left > 0.5) ? (1 - (life_left - 0.5)) * 2  : life_left * 2;
                 context.fillStyle = "#ffd700";
                 context.fillRect(back_particles[i].x, back_particles[i].y, 5, 5);
                 //context.translate(back_particles[i].x, back_particles[i].y);
@@ -135,14 +134,14 @@ function update()
         context.globalAlpha = 1.0;    
         context.fillStyle = "#2a0042";
         context.beginPath();
-        context.arc(canvas.width, (canvas.height / 1920) * (1920 + 500), (canvas.height / 1920) * 1000, 0, Math.PI * 2.0);
+        context.arc(canvas.width, (canvas.height / 1920) * (1920 + 450), (canvas.height / 1920) * (1000), 0, Math.PI * 2.0);
     context.fill();
     
     context.save();
         context.globalAlpha = 1.0;
         context.fillStyle = "#4a0075";
         context.beginPath();
-        context.arc(0, (canvas.height / 1920) * (1920 + 500), (canvas.height / 1920) * 800, 0, Math.PI * 2.0);
+        context.arc(0, (canvas.height / 1920) * (1920 + 500), (canvas.height / 1920) * (800), 0, Math.PI * 2.0);
     context.fill();
     
 
