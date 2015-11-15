@@ -99,9 +99,9 @@ function update()
     //draw te ocean
     context.save();
     context.fillStyle = "#2a0042";
-    context.fillRect(0, canvas.height - (canvas.height / 1920) * (180  + 10 * Math.sin(new Date().getTime() * 0.002)), canvas.width, 1000);
+    context.fillRect(0, canvas.height - (canvas.height / 1920) * (180  + 10 * Math.sin(new Date().getTime() * 0.0002)), canvas.width, 1000);
     context.fillStyle = "#190031";    
-    context.fillRect(0, canvas.height - (canvas.height / 1920) * (200  + 10 * Math.sin(new Date().getTime() * 0.001)), canvas.width, 1000);
+    context.fillRect(0, canvas.height - (canvas.height / 1920) * (200  + 10 * Math.sin(new Date().getTime() * 0.0001)), canvas.width, 1000);
     context.restore();
    
     //update and draw
