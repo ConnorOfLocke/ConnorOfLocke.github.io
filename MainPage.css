@@ -72,10 +72,6 @@ body{
     z-index: -1;
 }
 
-a{
-    target : "_blank";
-}
-
 a:link{
     /*color : #FF0000;*/
     color : #ffffff;

@@ -284,7 +284,7 @@ Emitter.prototype.update = function(dt)
     
 	var Zero = SIMD.Float32x4(0,0,0,0);
     
-    for (var i = 0 ; i < this.p_life.length; i++)
+    for (var i = 0 ; i < this.p_life.length / 4; i++)
 	{
 		this.p_velocity_x[i] = SIMD.Float32x4.add( this.p_velocity_x [i], gravity_x );
 		this.p_velocity_y[i] = SIMD.Float32x4.add( this.p_velocity_y [i], gravity_y );
@@ -309,7 +309,7 @@ Emitter.prototype.update = function(dt)
 
 Emitter.prototype.draw = function()
 {
-	for (var i = 0 ; i < this.p_life.length; i++)
+	for (var i = 0 ; i < this.p_life.length / 4; i++)
 	{
         //draws all the things from each chunk
       
