@@ -6,6 +6,7 @@ h1 {
     margin-bottom: 0px;
     margin-top : 0;
     padding: 0;
+    color : #fafafa;
 }
 
 h1#spaced {
@@ -15,6 +16,7 @@ h1#spaced {
     margin-bottom: 12px;
     margin-top : 0;
     padding: 0;
+
 }
 
 h2 {
@@ -72,9 +74,30 @@ body{
     z-index: -1;
 }
 
+a.highlighted:link{
+    /*color : #FF0000;*/
+    color : #ffd700;
+    
+	  -o-transition:.5s;
+	  -ms-transition:.5s;
+	  -moz-transition:.5s;
+	  -webkit-transition:.5s;
+	
+    text-decoration: none;
+}
+
+a.highlighted:visited{
+    color : #ffd700;
+    text-decoration: none;
+}
+
+a.highlighted:hover{
+    color : #5F5AA2;
+}
+
 a:link{
     /*color : #FF0000;*/
-    color : #ffffff;
+    color : #fafafa;
     
 	  -o-transition:.5s;
 	  -ms-transition:.5s;
@@ -85,7 +108,7 @@ a:link{
 }
 
 a:visited{
-    color : #ffffff;
+    color : #fafafa;
     text-decoration: none;
 }
 
@@ -109,6 +132,8 @@ iframe{
 {
     background : #000000;
     background-color : rgba(0, 0, 0, 0.5);
+    background-color : rgba(0, 0, 0, 0.5);
+    
     width : 100%;
     margin-left : auto;
     margin-right : auto;
@@ -143,8 +168,9 @@ iframe{
 
 #TitleText
 {
-    background : #fafafa;
-    background-color : rgba(240, 240, 240, 0.5);
+    background : #4a0075;
+    
+    background-color : rgba(74, 00, 117, 0.5);
     white-space : nowrap;
     width : 100%;
     padding: 0;
