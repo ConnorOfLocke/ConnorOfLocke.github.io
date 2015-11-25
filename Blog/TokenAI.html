@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+        <meta charset ="UTF-8">
+        <meta name = "description" content="Portfoliio website for Connor Locke-Warburton">
+		<meta name = "author" content="Connor Locke-Warburton">
+        
+        <title> Blog | Connor Locke-Warburton</title>
+       
+        <link href='https://fonts.googleapis.com/css?family=Raleway:800' rel='stylesheet' type='text/css'>
+		<link rel = "stylesheet" type= "text/css" href = "../MainPage.css">
+		</style>
+	</head>
+	<body>
+        <canvas id = "background_canvas" width = "200" height = "200" style="position:fixed; z-index:-1;"> </canvas>
+        
+        <script src = "../JSLib/ecmascript_simd.js"> </script>        
+        <script src = "../Particles/particleSystem.js"> </script>
+        <script src = "../JSLib/Perlin.js"></script>
+        <script src = "../background_canvas.js"></script>
+	
+		<div id = "MiddleContainer">   
+			<div id = "Middle" >
+				<div id = "Title">
+					<div id = "TitleText">
+						<h1 id = "spaced" color = "#fafafa">Connor Locke-Warburton</h1>
+						<h2 color = "#fafafa">Gameplay Programmer </h2>
+					</div>
+                    <br>
+                    <br>
+                    <div id = "TitleLink_Left">
+                       <h1 margin-bottom = "0px"><a href="../index.html">Home</a></h1>
+                    </div>
+                    
+                    <div id = "TitleLink_Left">
+                       <h1 margin-bottom = "0px"><a href="../projects.html">Projects</a></h1>
+                    </div>
+                    
+                    <div id = "TitleLink_Left">
+                       <h1 margin-bottom = "0px"><a href="../toys.html">Misc</a></h1>
+                    </div>
+                    
+                    <div id = "TitleLink_Left">
+                       <h1 margin-bottom = "0px"><a href="../contact.html">Contact</a></h1>
+                    </div>
+				</div>
+			    <br>     
+                <br>
+                <br>
+                <br>                   
+                <div id = "MiddleContent">
+					<div id = "CenteringDiv">
+						<p> To preface and if you haven't seen or played Token, It's is a hex grid game where the aim is to get your token to designated end hexes by moving one hex at a time and then placing a wall between two other hexes</p>
+						<br>
+						<p>Simple in concept and much like checkers or any board game, every player has all information at all times. But it's got some caveats in their plenty.</p>
+						<br>
+						<h2>Part 1 - Representing the board</h2>
+						<br>
+						<p> Before we start putting AI routines, rules and whatever else you need, you first need a way to store a single game in it's entirety. </p>
+						<br>
+						<p> Much like chess or whatever you need you can store it as a array of values and save exactly which value is which</p>
+						<br>
+						<p> This would work except we ain't using an exact square grid. I came across <a class = "highlighted" href = "http://www.redblobgames.com/grids/hexagons/" target = "_blank">this website<a> which is incredibly usefull for working with hex grids.</p>
+						
+					</div>
+                </div>
+			</div>
+		</div>
+</html>
+	
+	
