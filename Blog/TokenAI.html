@@ -50,21 +50,33 @@
                 <br>
                 <br>                   
                 <div id = "MiddleContent">
+					<h1> Token AI </h1>
+					<br>
+					<p class = "content">To preface and if you haven't seen or played <a class = "highlighted" href = "http://www.tokengamestudio.com/" target = "_blank">Token</a>, It's is a hex grid game where the aim is to get your token to designated end hexes by moving one hex at a time and then placing a wall between two other hexes</p>
+					<br>
+					<p class = "content">Simple in concept and much like checkers or any board game, every player has all information at all times. But it's got some caveats in their plenty.</p>
+					<br>
+					<h2>Part 1 - Initialising the board</h2>
+					<br>
+					<p class = "content">Before we start putting AI routines, rules and whatever else you need, you first need a way to store a single game in it's entirety. </p>
+					<br>
+					<p class = "content">Much like chess or checkers you can store it as an multidimensional array or just a normal array if you're clever and use x,y positions to index into it.</p>
+					<br>
+					<p class = "content">This would work except we ain't using an exact square grid. I came across <a class = "highlighted" href = "http://www.redblobgames.com/grids/hexagons/" target = "_blank">this website</a> which among other stuff shows that you can.</p>
+					<br>
+					<p class = "content">So using that site we opted for an "even-q" layout which shifted the coord down each even y-index starting from a bottom left corner. From there we assigned each value an enum denoting its type</p>
+					<br>
+					<p class = "content">I created a tool we can could then put in a formatted text document that Brett our designer could f'nangle to his liking, like so:<p>
+					<br>
 					<div id = "CenteringDiv">
-						<p> To preface and if you haven't seen or played Token, It's is a hex grid game where the aim is to get your token to designated end hexes by moving one hex at a time and then placing a wall between two other hexes</p>
-						<br>
-						<p>Simple in concept and much like checkers or any board game, every player has all information at all times. But it's got some caveats in their plenty.</p>
-						<br>
-						<h2>Part 1 - Representing the board</h2>
-						<br>
-						<p> Before we start putting AI routines, rules and whatever else you need, you first need a way to store a single game in it's entirety. </p>
-						<br>
-						<p> Much like chess or whatever you need you can store it as a array of values and save exactly which value is which</p>
-						<br>
-						<p> This would work except we ain't using an exact square grid. I came across <a class = "highlighted" href = "http://www.redblobgames.com/grids/hexagons/" target = "_blank">this website<a> which is incredibly usefull for working with hex grids.</p>
-						
+						<img src= "TokenAI_example1.png" alt ="TokenAI_example"></img></p>
 					</div>
+					<br>
+					<p class = "content"> In this map, the 0 denotes not to render a hex at that position, 1 is a normal hex, and s1,s2,s3 and e1,e2,e3 would represent a start and end hex respectively.</p>
+					<br>
                 </div>
+				
+				<p>Last edited: 11/25/2015</p>
 			</div>
 		</div>
 </html>
