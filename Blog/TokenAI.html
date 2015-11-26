@@ -50,23 +50,38 @@
                 <br>
                 <br>                   
                 <div id = "MiddleContent">
-					<h1> Token AI </h1>
+					<a class = "highlighted" name="linktotop"></a>
+					<h1> Töken AI </h1>
+					<hr>
+					<p class = "content">To preface y'all should look at <a class = "highlighted" href = "http://www.tokengamestudio.com/" target = "_blank">Töken</a>! If you haven't seen or played it, It's is a hex grid game where the aim is to get your token to the end hexes by moving one hex at a time. You then place a wall between two other hexes to slow down the other players.</p>
 					<br>
-					<p class = "content">To preface and if you haven't seen or played <a class = "highlighted" href = "http://www.tokengamestudio.com/" target = "_blank">Token</a>, It's is a hex grid game where the aim is to get your token to designated end hexes by moving one hex at a time and then placing a wall between two other hexes</p>
+					<div id = "CenteringDiv">
+						<iframe src="http://giphy.com/embed/3oEduV0TiOxIHKkL3G?html5=true" width="480" height="346" frameBorder="0"></iframe>
+						<!-- <p class = "content"><a href="http://giphy.com/gifs/3oEduV0TiOxIHKkL3G" target = "_blank">via GIPHY</a></p> -->
+					</div>
 					<br>
 					<p class = "content">Simple in concept and much like checkers or any board game, every player has all information at all times. But it's got some caveats in their plenty.</p>
 					<br>
+					<div id = "CenteringDiv">
+					   <iframe width="420" height="315"
+					   src="http://www.youtube.com/embed/fz9ennYdVB4">
+                        </iframe>
+					</div>
+					<br>
+					<br>
+					<a name="part_1"></a>
 					<h2>Part 1 - Initialising the board</h2>
+					<hr>
 					<br>
 					<p class = "content">Before we start putting AI routines, rules and whatever else you need, you first need a way to store a single game in it's entirety. </p>
 					<br>
 					<p class = "content">Much like chess or checkers you can store it as an multidimensional array or just a normal array if you're clever and use x,y positions to index into it.</p>
 					<br>
-					<p class = "content">This would work except we ain't using an exact square grid. I came across <a class = "highlighted" href = "http://www.redblobgames.com/grids/hexagons/" target = "_blank">this website</a> which among other stuff shows that you can.</p>
+					<p class = "content">This would work except we ain't using an exact square grid. It's a Hexgrid. I came across <a class = "highlighted" href = "http://www.redblobgames.com/grids/hexagons/" target = "_blank">this website</a> which among other stuff shows that you can.</p>
 					<br>
-					<p class = "content">So using that site we opted for an "even-q" layout which shifted the coord down each even y-index starting from a bottom left corner. From there we assigned each value an enum denoting its type</p>
+					<p class = "content">Using that site we opted for an "even-q" layout which shifted the coordinate down each even y-index starting from a bottom left corner. From there we assigned each value an enum denoting its type</p>
 					<br>
-					<p class = "content">I created a tool we can could then put in a formatted text document that Brett our designer could f'nangle to his liking, like so:<p>
+					<p class = "content">I created a tool we can could then put in a formatted text document that Brett our designer could f'nangle to his liking, like so:</p>
 					<br>
 					<div id = "CenteringDiv">
 						<img src= "TokenAI_example1.png" alt ="TokenAI_example"></img></p>
@@ -74,11 +89,78 @@
 					<br>
 					<p class = "content"> In this map, the 0 denotes not to render a hex at that position, 1 is a normal hex, and s1,s2,s3 and e1,e2,e3 would represent a start and end hex respectively.</p>
 					<br>
-                </div>
+					
+					<a name="part_2"></a>
+					<h2>Part 2 - Using the board</h2>
+					<hr>
+					<br>
+					<p class = "content">Next up we try to optimise. The way (in our case) <a class = "highlighted" href = "https://en.wikipedia.org/wiki/Monte_Carlo_tree_search" target = "_blank">Monte Carlo</a> works (and I'll go into more detail in a moment), is it'll pick an action to do, recreate the gameboard created from that action and plug that back into the same function until it's told not to.</p>
+					<br>
+					<p class = "content">But say you're going 30 moves into the function. You're creating and storing 30 different versions of the game board each time you run through a single iteration. To get good ai sample you need to get in the thousands of iterations and so asap.<p>
+					<br>
+					<p class = "content">Again taking cues from chess programs use what are called <a class = "highlighted" href = "https://en.wikipedia.org/wiki/Bitboard" target = "_blank">bitboards</a>. Instead of storing each position as their own variable, you create a bitstream the rough size of your gameboard which for chess and checkers is 64 bits for a 8x8 grid.</p> 
+					<br>
+					<p class = "content">We use them a little differently. Since in Töken you can place a wall between each hex adjacent hex, just storing if a token there or not isn't enough.</p>
+					<br>
+					<p class = "content">So we create 6 different bitboards for each direction top, top left, top right, bottom, bottom left and bottom right. Then we store player positions as an index into that bitstream and the end zones as 3 separate Bitboards since they don't change.</p>
+					<br>
+					<div id = "CenteringDiv">
+						<img src= "TokenAI_example2.png" width = "395" height = "234" alt ="TokenAI_example"></img></p>
+					</div>
+					<br>
+					<p class = "content">A nice upshot of using bitboard, they're fast as hell. Usually bitboards only take a couple of integers worth of space and they fit nicely into cache unlike a huge array of values. To index into it you just apply a bit shift and get the exact value you want without going through the entire array</p>
+					<br>
+					
+					<a name="part_3"></a>
+					<h2>Part 3 - Actual AI</h2>
+					<hr>
+					<br>
+					<p class = "content"><a class = "highlighted" href = "https://en.wikipedia.org/wiki/Monte_Carlo_tree_search" target = "_blank">Monte Carlo</a> is a tree traversal algorithm. You define a set of choices to make, be that moving your a gamepiece or placing a wall. For each choice you define a weight that will later be added onto.</p>
+					<br>
+					<p class = "content">From there you randomly choose a move and implement that move in a test game. You then recursively keep on choosing moves randomly and implementing them in the test game until you come across a end state. This end state could be winning a game or just iterating about 30 times.</p>
+					<br>
+					<div id = "CenteringDiv">
+						<img src= "TokenAI_example3.png" width = "395" height = "200" alt ="TokenAI_example3"></img></p>
+					</div>
+					<br>
+					<p class = "content">Once you have your end state, you create a evaluation function that returns a single value denoting how well the ai is doing. This would be different for whatever game it's in. For us, 1 is win, -1 is lose or we weight the shortest path the ai has against the paths of the other players</p>
+					<br>
+					<p class = "content">We also added some other adjustments for specific rules. We found that since we weight on how close each player is the end zones, there would rise situations where the AI aims to screw over the player rather than actually winning. So one move away from winning equals a win for the ai.</p>
+					<br>
+					<div id = "CenteringDiv">
+						<img src= "TokenAI_example4.png" width = "395" height = "234" alt ="TokenAI_example4"></img></p>
+					</div>
+					<br>
+					<p class = "content">Another problem we had is placing walls. A wall can be placed between any two adjacent hexes on the board. If a board is 8x8 hexes and there exists 6 possible wall placements from each hex. You have 384 choices which makes our ai near random. So you can take out doubles and edge cases but that still leaves a good chunk of possible placements.</p>
+					<br>
+					<p class = "content">So to make it less random, depending on which flags are set for the AI, from the choices it culls out any that's not adjoining a hex that's on another players path.</p>
+					<br>
+					<p class = "content">There also exists the rule that a player couldn't completely block a path of another player. This rose to an interesting "stalemate" where two players have only one path with the other player physically blocking that path with your own piece.</p>
+					<br>
+					<p class = "content">To solve this we then introduced the rule that players could not place walls in-between end zones which for single end zone maps still did not solve the error. So an edge case for this type of map that stopped walls being placed on end zones period.</p>
+					<br>
+					<hr>
+					<br>
+					<p class = "content">So there you have it! We are still working on parts of it to really amp up the challenge but at the point of writing, this is how it works.</p>
+					<br>
+					<p class = "content">If y'all have any questions, come email me at <a class = "highlighted" href="mailto:clocke555@gmail.com">clocke555@gmail.com</a></p>
 				
-				<p>Last edited: 11/25/2015</p>
+				</div>
+				<br>
+				<br>
+				<br>
+				<div id = "CenteringDiv">
+					<p><a class = "highlighted" href = "#linktotop">Back to top</a></p>
+					<p>Last edited: 26/11/2015</p>
+				</div> 
 			</div>
 		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 </html>
 	
 	
