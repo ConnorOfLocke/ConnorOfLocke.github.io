@@ -69,7 +69,7 @@
                 context.strokeStyle = "#000088";
             else if (this.vectors_x[i] < 0 && this.vectors_y[i] < 0)
                 context.strokeStyle = "#008800";
-            else if (this.vectors_x[i] > 0 && this.vectors_y[i] < 0)
+            else //if (this.vectors_x[i] > 0 && this.vectors_y[i] < 0)
                 context.strokeStyle = "#880000";
             
 			//context.strokeStyle = "#FFFFFF";
@@ -86,6 +86,7 @@
 			context.lineTo( this.vectors_x[i] * horiz_spacing * 0.5 + x * horiz_spacing,
                             this.vectors_y[i] * vert_spacing  * 0.5 + y * vert_spacing);
 		context.stroke();
+		context.restore();
 	}
  }
  
