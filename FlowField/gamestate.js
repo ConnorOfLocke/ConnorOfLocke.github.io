@@ -5,13 +5,13 @@ var GameState = function()
 	this.FlowFieldExample = new FlowField();
 	this.FlowFieldExample.Init(50, 50, SCREEN_WIDTH, SCREEN_HEIGHT, 0.1, 0, 0, 0, 5, 0.5); 
     
-    this.FlowActors = [];
+    this.FlowActors = new Array(2500);
     var actorIndex = 0;
-    for (var x = 0; x < 20; x++)
+    for (var x = 0; x < 50; x++)
     {
-        for (var y = 0; y < 20; y++)
+        for (var y = 0; y < 50; y++)
         {
-            this.FlowActors[actorIndex] = new Actor(x * (SCREEN_WIDTH /20.0), y * (SCREEN_HEIGHT / 20.0), Math.random() * 100000 + 1000 , "Particle.png");
+            this.FlowActors[actorIndex] = new Actor(x * (SCREEN_WIDTH /40.0), y * (SCREEN_HEIGHT / 40.0), Math.random() * 100000 + 1000 , "banana.png");
             actorIndex++;
         }
     }
@@ -77,12 +77,12 @@ GameState.prototype.update = function(dt)
     if (input.isKeyDown(input.KEY_R))
     {
         var actorIndex = 0;
-        for (var x = 0; x < 20; x++)
+        for (var x = 0; x < 50; x++)
         {
-            for (var y = 0; y < 20; y++)
+            for (var y = 0; y < 50; y++)
             {
-                this.FlowActors[actorIndex].position_x = x * (SCREEN_WIDTH /20.0);
-                this.FlowActors[actorIndex].position_y = y * (SCREEN_HEIGHT / 20.0);
+                this.FlowActors[actorIndex].position_x = x * (SCREEN_WIDTH / 50.0);
+                this.FlowActors[actorIndex].position_y = y * (SCREEN_HEIGHT / 50.0);
                 this.FlowActors[actorIndex].velocoty_x = 0;
                 this.FlowActors[actorIndex].velocoty_y = 0;
                 actorIndex++;

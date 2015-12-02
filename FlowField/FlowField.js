@@ -1,6 +1,5 @@
  
 
- 
  var FlowField = function()
  {
 	this.vectors_x = [];
