@@ -1,4 +1,4 @@
-var canvas = document.getElementById("background_canvas");
+/*var canvas = document.getElementById("background_canvas");
 var context = canvas.getContext("2d");
 
 canvas.width = window.innerWidth;
@@ -170,3 +170,4 @@ function update()
 })();
 
 window.onEachFrame(update);
+*/
