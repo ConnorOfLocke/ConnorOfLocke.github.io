@@ -1,8 +1,8 @@
 
 h1 {
-    text-align: center;
+    text-align: left;
     font-family: 'Raleway', sans-serif;
-    font-size: 200%;
+    font-size: 400%;
     margin-bottom: 0px;
     margin-top : 0;
     padding: 0;
@@ -10,7 +10,7 @@ h1 {
 }
 
 h1#spaced {
-    text-align: center;
+    text-align: left;
     font-family: 'Raleway', sans-serif;
     font-size: 200%;
     margin-bottom: 12px;
@@ -22,9 +22,9 @@ h1#spaced {
 
 h2 {
     color : #fafafa;
-    text-align: center;
+    text-align: left;
     font-family: 'Raleway', sans-serif;
-    font-size: 140%;    
+    font-size: 200%;    
     margin-bottom: 0;
     margin-top : 0;
     padding: 0;
@@ -70,7 +70,7 @@ html {
     /*background: -moz-linear-gradient(	 #646165,#646165,#FAFAFA); 	/* For Firefox 3.6 to 15 */      
     /*background: linear-gradient(		 #646165,#646165,#FAFAFA); 	/* Standard syntax */            
     
-    background: #173753;
+    background: #2a9d8f;
     
 }
 
@@ -83,6 +83,7 @@ body{
     margin-right : auto;
     display: block;
     z-index: -1;
+    position: relative;
 }
 
 a.highlighted:link{
@@ -148,8 +149,6 @@ iframe{
     padding: 0;
     display: block;
     border: 0;    
-	
-
 }
 
 #TitleLink_Left
@@ -220,25 +219,25 @@ iframe{
     padding: 0;
     margin: 8px;
 	border-radius: 30px;
-
+    position : absolute;
 }
 
 #Middle{
     background : #000000;
-    background-color : rgba(0, 0, 0, 0.2);
+    background-color : rgba(0, 0, 0, 0.0);
     width : 50%;
     min-width : 500px;
     margin-left : auto;
     margin-right : auto;
     display: block;
-	border-radius: 30px;
+    border-radius: 30px;
 
 }
 
 #MiddleContent
 {
     background : #000000;
-    background-color : rgba(0, 0, 0, 0.2);
+    background-color : rgba(0, 0, 0, 0.0);
     width : 460px;
     margin-left : auto;
     margin-right : auto;
