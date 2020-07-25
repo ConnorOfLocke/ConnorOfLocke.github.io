@@ -1,5 +1,6 @@
 let scene, camera, renderer, cube;
-let frustrum = 200;
+let viewSize = 200;
+let origRatio;
 
 function Init(){
     scene = new THREE.Scene();
@@ -10,7 +11,17 @@ function Init(){
         0.1,
         1000 );
     */
-
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    origRatio = aspectRatio;
+    camera = new THREE.OrthographicCamera(
+        -aspectRatio * viewSize / 2,
+        aspectRatio * viewSize / 2,
+        viewSize / 2,
+        -viewSize / 2,
+        0.1,
+        1000
+    );
+    /*
     camera = new THREE.OrthographicCamera(
         window.innerWidth / -(0.5 * frustrum),
         window.innerWidth / (0.5 * frustrum),
@@ -18,15 +29,17 @@ function Init(){
         window.innerHeight / -(0.5 * frustrum),
         -500,
         1000 );
-    
-    camera.position.z =  -5;
-    camera.position.y =  0;
+    */
+    camera.position.z = -10;
+    camera.position.x = 0;
+    camera.position.y = 0;
+    camera.lookAt(scene.position);
 
-    renderer = new THREE.WebGLRenderer({antialias: true});
+    renderer = window.WebGLRenderingContext ? new THREE.WebGLRenderer({antialiasing: true}) : new THREE.CanvasRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(1,1,1);
+    const geometry = new THREE.BoxGeometry(10,10,10);
     //const material = new THREE.MeshBasicMaterial( {color: 0x00ff00});
     const texture = new THREE.TextureLoader().load('img/Test512x512.png');
     //const texture = THREE.ImageUtils.loadTexture('img/Test512X512.png');
@@ -34,37 +47,27 @@ function Init(){
 
     scene.background = new THREE.Color(0x2a9d8f);
 
+    var bottomLeft = new THREE.Vector3(-1, -1, 0).unproject(camera);
+    var topLeft = new THREE.Vector3(-1, 1, 0).unproject(camera);
+    var bottomRight = new THREE.Vector3(1, -1, 0).unproject(camera);
+    var topRight = new THREE.Vector3(1, 1, 0).unproject(camera);
+    bottomLeft.z = topLeft.z = bottomRight.z = topRight.z = 0;
+
     const linePoints = [];
-    linePoints.push(new THREE.Vector3(-10, 0, 0)); 
-    linePoints.push(new THREE.Vector3(0, 5, 0));
-    linePoints.push(new THREE.Vector3(10, 0, 0));
+    linePoints.push(topLeft); 
+    linePoints.push(new THREE.Vector3(0, 0, 0));
+    linePoints.push(bottomRight);
     const lineGeometry = new THREE.BufferGeometry().setFromPoints(linePoints);
 
     var line = new THREE.Line(lineGeometry, material);
     scene.add(line);
 
     cube = new THREE.Mesh(geometry, material);
-    cube1 = new THREE.Mesh(geometry, material);    
-    cube2 = new THREE.Mesh(geometry, material);
-    cube3 = new THREE.Mesh(geometry, material);
-    cube4 = new THREE.Mesh(geometry, material);
-    cube5 = new THREE.Mesh(geometry, material);
-    cube6 = new THREE.Mesh(geometry, material);
-
-    cube1.position.x += 5;
-    cube2.position.x -= 5;
-    cube3.position.y += 5;
-    cube4.position.y -= 5;
-    cube5.position.z += 5;
-    cube6.position.z -= 5;
+    var upCube = new THREE.Mesh(geometry, material);
+    upCube.position.y += 20;
 
     scene.add(cube);
-    scene.add(cube1);
-    scene.add(cube2);
-    scene.add(cube3);
-    scene.add(cube4);
-    scene.add(cube5);
-    scene.add(cube6);
+    scene.add(upCube);
 }
 
 function animate()
@@ -79,12 +82,14 @@ function animate()
 }
 
 function onWindowResize() {
-    //camera.aspect = window.innerWidth / window.innerHeight;
-    camera.left  = window.innerWidth  / -(0.5 * frustrum),
-    camera.right = window.innerWidth  /  (0.5 * frustrum),
-    camera.top   = window.innerHeight /  (0.5 * frustrum),
-    camera.right = window.innerHeight / -(0.5 * frustrum),
-    camera.upda();
+
+    const aspectRatio = window.innerWidth / window.innerHeight;
+    camera.left  = -aspectRatio * viewSize / 2;
+    camera.right = aspectRatio * viewSize / 2;
+    camera.top = viewSize / 2;
+    camera.bottom = -viewSize / 2;
+    camera.updateProjectionMatrix();
+
 
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
